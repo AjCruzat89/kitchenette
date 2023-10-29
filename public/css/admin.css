@@ -1,0 +1,189 @@
+body{
+    background-color: #141B2D !important;
+}
+
+#sidebar{
+    background-color: #1F2941 !important;
+    width: 300px;
+    height: 100% !important;
+    z-index: 9999 !important;
+}
+
+@media (max-width: 768px) {
+    #sidebar{
+        width: 100%;
+    }
+}
+
+#sidebar img{
+    width: 130px;
+    height: 120px;
+}
+
+#sidebar a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+}
+
+#sidebar a:hover{
+    color: lightblue;
+}
+
+#sidebar form{
+    margin-top: auto;
+}
+
+#sidebar form button{
+    background-color: lightblue;
+    border: 1px solid lightblue;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease-in, border 0.3s ease-in;
+}
+
+#sidebar form button:hover{
+    background-color: #7997a1;
+    border: 1px solid #7997a1;
+}
+/* <!--===============================================================================================--> */
+#main{
+    margin-left: 300px;
+    overflow: hidden;
+}
+
+#mainContent{
+    margin-top: 80px;
+}
+
+#mainContent h1{
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+@media (max-width: 768px) {
+    #main{
+        margin-left: 0px !important;
+    }
+}
+/* <!--===============================================================================================--> */
+.navbar{
+    color: white;
+    height: 80px;
+    width: 100%;
+    background-color: #141B2D;
+    z-index: 9998;
+}
+
+.navbar i{
+    font-size: 30px;
+}
+
+.bi.bi-x-lg {
+    z-index: 9999 !important;
+    position: fixed !important;
+    display: flex !important; 
+}
+
+
+.navbar i:hover{
+    color: lightblue;
+    cursor: pointer;
+}
+/* <!--===============================================================================================--> */
+canvas {
+    width: 100% !important;
+    height: 400px !important;
+    background-color: white;
+    border-radius: 15px;
+}
+/* <!--===============================================================================================--> */
+#cards .col h1, #cards .col h3{
+    color: black;
+}
+
+#cards .col h1{
+    color: #1F2941;
+    font-weight: bold;
+}
+
+#cards .col div{
+    background-color: white;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+#cards .col div::after{
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    background-color: lightblue;
+    opacity: 60%;
+    right: -70px;
+    width: 80px;
+    height: 200px;
+}
+/* <!--===============================================================================================--> */
+#imgBox{
+    position: relative;
+}
+
+#imgBox i{
+    color: white;
+    position: absolute;
+    left: 15px;
+    top: 25px;
+    font-size: 30px;
+}
+
+@media (min-width:768px) {
+    #imgBox i{
+        display: none !important;
+    }
+}
+/* <!--===============================================================================================--> */
+.table{
+    border-radius: 15px;
+    overflow: hidden;
+}
+/* <!--===============================================================================================--> */
+.pagination {
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+  }
+  
+  .pagination li {
+    margin: 0 5px;
+  }
+  
+  .pagination li a,
+  .pagination li span {
+    padding: 5px 10px;
+    text-decoration: none;
+    background-color: #eaeaea;
+    color: #333;
+  }
+  
+  .pagination li.active span {
+    background-color: lightblue;
+    color: #fff;
+  }
+  
+  .pagination li.disabled span,
+  .pagination li.disabled a {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  
+  .pagination li a:hover {
+    background-color: #ccc;
+  }
+

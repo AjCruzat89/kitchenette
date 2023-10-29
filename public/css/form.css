@@ -1,0 +1,59 @@
+body{
+    background:
+        radial-gradient(farthest-side at -33.33% 50%, #0000 52%, #b42730 54% 57%, #0000 59%) 0 calc(128px/2),
+        radial-gradient(farthest-side at 50% 133.33%, #0000 52%, #b42730 54% 57%, #0000 59%) calc(128px/2) 0,
+        radial-gradient(farthest-side at 133.33% 50%, #0000 52%, #b42730 54% 57%, #0000 59%),
+        radial-gradient(farthest-side at 50% -33.33%, #0000 52%, #b42730 54% 57%, #0000 59%),
+        #000000 !important;
+    background-size: calc(128px/4.667) 128px, 128px calc(128px/4.667) !important;
+}
+
+.box{
+    background-color: white;
+    min-width: 600px;
+    width: 600px;
+    -webkit-box-shadow: 3px 3px 10px 3px #000000;
+    -moz-box-shadow: 3px 3px 10px 3px #000000;
+    box-shadow: 3px 3px 10px 3px #000000;
+}
+
+@media (max-width: 600px) {
+    .box{
+        min-width: 100%;
+        width: 100%;
+    }
+}
+
+
+.box h1{
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.box a{
+    text-align: center;
+}
+
+.box a:hover{
+    color: #084298;
+}
+
+.box label{
+    font-size: 20px;
+}
+
+.box input{
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.box button{
+    color: white;
+    padding: 5px;
+    transition: background-color 0.2s ease-in;
+}
+
+.box button:hover{
+    background-color: #084298;
+    border: 1px solid #084298;
+}
