@@ -31,6 +31,7 @@ Route::middleware(['loggedIn'])->group(function () {
 });
 
 Route::middleware(['admin'])->group(function () {
-    Route::view('admin', './page/admin')->name('admin');
+    Route::GET('admin', [adminController::class, 'adminPage'])->name('admin');
     Route::GET('activity', [adminController::class, 'activityLog'])->name('activity');
+    Route::VIEW('inventory', './page/inventory')->name('inventory');
 });

@@ -8,8 +8,12 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3" id="cards">
                 <div class="col">
                     <div class="d-flex flex-column p-3">
-                        <h1>Total Sales</h1>
-                        <h3>1231233</h3>
+                        <h1>Registered Users</h1>
+                        @if($userCount)
+                        <h3>{{$userCount}}</h3>
+                        @else
+                        <h3>Unavailable</h3>
+                        @endif
                     </div>
                 </div>
                 <div class="col">
