@@ -32,6 +32,7 @@ Route::middleware(['loggedIn'])->group(function () {
 
 Route::middleware(['admin'])->group(function () {
     Route::GET('admin', [adminController::class, 'adminPage'])->name('admin');
-    Route::GET('activity', [adminController::class, 'activityLog'])->name('activity');
-    Route::VIEW('inventory', './page/inventory')->name('inventory');
+    Route::GET('activity', [adminController::class, 'activityPage'])->name('activity');
+    Route::VIEW('product', './page/product')->name('product');
+    Route::POST('addProduct', [adminController::class, 'addProduct'])->name('addProduct');
 });

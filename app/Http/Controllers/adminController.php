@@ -13,11 +13,21 @@ class adminController extends Controller
         return view('page.admin', ['userCount' => $userCount]);
     }
 
-
-    public function activityLog()
+    public function activityPage()
     {
         $activityLogs = Activity::orderBy('created_at', 'desc')->paginate(10);
         return view('page.activity', ['activityLogs' => $activityLogs]); 
+    }
+
+    public function addProduct(Request $req){
+        $req->validate([
+            'product_name' => 'required',
+            'product_picture' => 'required',
+            'product_price' => 'required|numeric',
+            'product_stocks' => 'required|numeric',
+        ]);
+
+        return redirect()->route('product')->with('success', 'Hi');
     }
 }
 
