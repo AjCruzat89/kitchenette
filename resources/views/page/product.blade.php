@@ -13,7 +13,7 @@
         </div>
     </div>
 </div>
-<form action="{{ route('addProduct') }}" method="POST">
+<form action="{{ route('addProduct') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="modal fade" id="addInventory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -28,28 +28,16 @@
                 <div class="modal-body">
                     <div class="d-flex flex-column gap-2">
                         @error('product_name')
-                            <div class="alert alert-danger d-flex align-items-center"><span
-                                    class="material-symbols-outlined">
-                                    close
-                                </span>{{ $message }}</div>
+                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
                         @enderror
                         @error('product_picture')
-                            <div class="alert alert-danger d-flex align-items-center"><span
-                                    class="material-symbols-outlined">
-                                    close
-                                </span>{{ $message }}</div>
+                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
                         @enderror
                         @error('product_price')
-                            <div class="alert alert-danger d-flex align-items-center"><span
-                                    class="material-symbols-outlined">
-                                    close
-                                </span>{{ $message }}</div>
+                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
                         @enderror
                         @error('product_stocks')
-                            <div class="alert alert-danger d-flex align-items-center"><span
-                                    class="material-symbols-outlined">
-                                    close
-                                </span>{{ $message }}</div>
+                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
                         @enderror
                         <div class="d-flex justify-content-center">
                             <img id="productImage" src="#" alt="Product Image" style="display: none;" />
@@ -59,7 +47,7 @@
                             placeholder="Enter Product Name...">
                         <label for="">Product Picture</label>
                         <input type="file" name="product_picture" id="" onchange="displayImage(event)"
-                            accept=".jpg, .jpeg, .png">
+                        accept="image/*" capture="environment">
                         <label for="">Product Price</label>
                         <input class="p-2" type="text" name="product_price" id=""
                             placeholder="Enter Product Name...">

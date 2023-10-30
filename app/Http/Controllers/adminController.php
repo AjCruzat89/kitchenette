@@ -22,7 +22,7 @@ class adminController extends Controller
     public function addProduct(Request $req){
         $req->validate([
             'product_name' => 'required',
-            'product_picture' => 'required',
+            'product_picture' => 'required|image|between:1024,2048',
             'product_price' => 'required|numeric',
             'product_stocks' => 'required|numeric',
         ]);
