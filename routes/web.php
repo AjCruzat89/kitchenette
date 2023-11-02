@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', './page/home')->name('home');
+Route::VIEW('/', './page/home')->name('home');
 Route::POST('forgot-password', [authController::class, 'ForgotPasswordRequest'])->name('forgotPasswordRequest');
 Route::POST('reset-password', [authController::class, 'ResetPasswordRequest'])->name('resetPasswordRequest');
 Route::POST('registerRequest', [authController::class, 'Register'])->name('registerRequest');
@@ -24,9 +24,9 @@ Route::GET('logoutRequest', [authController::class, 'Logout'])->name('logoutRequ
 Route::view('admin', './page/admin')->name('admin');
 
 Route::middleware(['loggedIn'])->group(function () {
-    Route::view('register', './page/register')->name('registerPage');
-    Route::view('login', './page/login')->name('loginPage');
-    Route::view('forgot-password', './page/forgot-password')->name('forgotPassword');
+    Route::VIEW('register', './page/register')->name('registerPage');
+    Route::VIEW('login', './page/login')->name('loginPage');
+    Route::VIEW('forgot-password', './page/forgot-password')->name('forgotPassword');
     Route::GET('reset-password/{token}', [authController::class, 'ResetPasswordPage'])->name('resetPasswordPage');
 });
 

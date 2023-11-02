@@ -125,21 +125,22 @@ class authController extends Controller
     }
     //<!--===============================================================================================-->
     public function logout()
-{
-    if (Auth::check()) {
-        $user = Auth::user();
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
 
-        if ($user->user_role === 'admin') {
-            $activityLog = new Activity();
-            $activityLog->name = $user->name;
-            $activityLog->activity = $user->name . ' Logged Out At ' . Carbon::now();
-            $activityLog->save();
+            if ($user->user_role === 'admin') {
+                $activityLog = new Activity();
+                $activityLog->name = $user->name;
+                $activityLog->activity = $user->name . ' Logged Out At ' . Carbon::now();
+                $activityLog->save();
+                Auth::logout();
+                return redirect()->route('loginPage')->with('success', 'Logged Out Successfully.');
+            }
+
             Auth::logout();
             return redirect()->route('loginPage')->with('success', 'Logged Out Successfully.');
         }
-
-        Auth::logout();
-        return redirect()->route('loginPage')->with('success', 'Logged Out Successfully.');
     }
-}
+    //<!--===============================================================================================-->
 }
