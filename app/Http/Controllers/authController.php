@@ -18,12 +18,12 @@ class authController extends Controller
     public function Register(Request $req)
     {
         $req->validate([
-            'username' => 'required',
+            'name' => 'required|unique:users',
             'password' => 'required|string|min:8',
             'email' => 'required|email|unique:users'
         ]);
 
-        $data['name'] = $req->input('username');
+        $data['name'] = $req->input('name');
         $data['password'] = Hash::make($req->input('password'));
         $data['email'] = $req->input('email');
         $user = User::create($data);
@@ -47,7 +47,7 @@ class authController extends Controller
                 case 'admin':
                     $activityLog = new Activity();
                     $activityLog->name = $user->name;
-                    $activityLog->activity = $user->name . ' Logged In At ' . Carbon::now();
+                    $activityLog->activity = $user->name . ' logged in at ' . Carbon::now();
                     $activityLog->save();
                     return redirect()->route('admin')->with('success', 'Login Successful!');
                     break;

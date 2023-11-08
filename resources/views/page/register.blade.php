@@ -6,7 +6,7 @@
 
         <div class="box d-flex flex-column p-4 p-lg-5" data-aos="fade-up">
             <h1>Register</h1>
-            @error('username')
+            @error('name')
                 <div class="alert alert-danger text-center">{{ $message }}</div>
             @enderror
             @error('password')
@@ -18,7 +18,7 @@
             <label for="" class="mt-3">Email</label>
             <input type="text" name="email" id="" placeholder="Enter Email...">
             <label for="" class="mt-3">Username</label>
-            <input type="text" name="username" id="" placeholder="Enter Username...">
+            <input type="text" name="name" id="" placeholder="Enter Username...">
             <label for="" class="mt-3">Password</label>
             <input type="password" name="password" id="" placeholder="Enter Password...">
             <a href="{{ route('loginPage') }}" class="mt-3">Already Have An Account? Login here...</a>

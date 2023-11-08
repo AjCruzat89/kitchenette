@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class adminController extends Controller
     //<!--===============================================================================================-->
     public function addProduct(Request $req){
         $req->validate([
-            'product_name' => 'required',
+            'product_name' => 'required|unique:products',
             'product_picture' => 'required|image|max:5120',
             'product_price' => 'required|numeric',
             'product_stock' => 'required|numeric',
@@ -43,7 +44,7 @@ class adminController extends Controller
         $user = Auth::user();
         $activity = new Activity();
         $activity->name = $user->name;
-        $activity->activity = 'User: ' . $user->name . ' Added The Product ' . $product->product_name;
+        $activity->activity = 'User: ' . $user->name . ' added the product ' . $product->product_name . ' at ' . Carbon::now();
         $activity->save();
         return redirect()->route('product')->with('success', 'Product added successfully.');
     }

@@ -25,10 +25,10 @@
 
                         @foreach ($products as $product)
                             <tr>
-                                <td>{{ $product->product_id }}</td>
+                                <th scope="col">{{ $product->product_id }}</th>
                                 <td>{{ $product->product_name }}</td>
                                 <td><img class="rounded" src="{{ $product->product_pictureURL }}"
-                                        alt="" style="width: 150px; height: 150px;"></td>
+                                        alt="" style="width: 150px; height: 150px; cursor: pointer;" onclick="window.open('{{$product->product_pictureURL}}' , '_blank')"></td>
                                 <td>{{ $product->product_price }}</td>
                                 <td>{{ $product->product_stock }}</td>
                             </tr>
