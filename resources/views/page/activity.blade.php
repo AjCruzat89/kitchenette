@@ -6,7 +6,7 @@
         <div class="d-flex flex-column px-3 py-3" id="mainContent">
             <h1>Activity Log</h1>
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Username</th>

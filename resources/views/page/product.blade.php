@@ -10,6 +10,33 @@
                         add_circle
                     </span>ADD</button>
             </div>
+            <div class="table-responsive mt-3">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">product_id</th>
+                            <th scope="col">product_name</th>
+                            <th scope="col">product_picture</th>
+                            <th scope="col">product_price</th>
+                            <th scope="col">product_stock</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach ($products as $product)
+                            <tr>
+                                <td>{{ $product->product_id }}</td>
+                                <td>{{ $product->product_name }}</td>
+                                <td><img class="rounded" src="{{ $product->product_pictureURL }}"
+                                        alt="" style="width: 150px; height: 150px;"></td>
+                                <td>{{ $product->product_price }}</td>
+                                <td>{{ $product->product_stock }}</td>
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -47,12 +74,12 @@
                             placeholder="Enter Product Name...">
                         <label for="">Product Picture</label>
                         <input type="file" name="product_picture" id="" onchange="displayImage(event)"
-                        accept="image/*" capture="environment">
+                            accept="image/*" capture="environment">
                         <label for="">Product Price</label>
                         <input class="p-2" type="text" name="product_price" id=""
                             placeholder="Enter Product Name...">
-                        <label for="">Product Stocks</label>
-                        <input class="p-2" type="text" name="product_stocks" id=""
+                        <label for="">Product Stock</label>
+                        <input class="p-2" type="text" name="product_stock" id=""
                             placeholder="Enter Product Name...">
                     </div>
                 </div>
@@ -66,11 +93,11 @@
 </form>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        @if(auth()->check())
+        @if (auth()->check())
             if ("{{ session('success') }}") {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Product Added',
+                    title: 'Product Added Successfully!',
                     showCancelButton: false,
                     showConfirmButton: false,
                     timer: 1000
