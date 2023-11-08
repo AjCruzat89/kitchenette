@@ -22,18 +22,23 @@
                         </tr>
                     </thead>
                     <tbody>
-
-                        @foreach ($products as $product)
+                        @if (count($products) === 0)
                             <tr>
-                                <th scope="col">{{ $product->product_id }}</th>
-                                <td>{{ $product->product_name }}</td>
-                                <td><img class="rounded" src="{{ $product->product_pictureURL }}"
-                                        alt="" style="width: 150px; height: 150px; cursor: pointer;" onclick="window.open('{{$product->product_pictureURL}}' , '_blank')"></td>
-                                <td>{{ $product->product_price }}</td>
-                                <td>{{ $product->product_stock }}</td>
+                                <td colspan="5">No available data</td>
                             </tr>
-                        @endforeach
-
+                        @else
+                            @foreach ($products as $product)
+                                <tr>
+                                    <th scope="col">{{ $product->product_id }}</th>
+                                    <td>{{ $product->product_name }}</td>
+                                    <td><img class="rounded" src="{{ $product->product_pictureURL }}" alt=""
+                                            style="width: 150px; height: 150px; cursor: pointer;"
+                                            onclick="window.open('{{ $product->product_pictureURL }}' , '_blank')"></td>
+                                    <td>{{ $product->product_price }}</td>
+                                    <td>{{ $product->product_stock }}</td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
