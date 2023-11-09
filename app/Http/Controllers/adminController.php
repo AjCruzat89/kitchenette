@@ -72,6 +72,14 @@ class adminController extends Controller
         ]);
 
         $product = Product::where('id', $req->product_id)->first();
+
+        $user = Auth::user();
+        $activity = new Activity();
+        $activity->name = $user->name;
+        $activity->activity = 'User: ' . $user->name . ' modified the product ' . $product->product_name . ' at ' . Carbon::now();
+        $activity->save();
+
+        
         $product->product_name = $req->product_name;
         if ($req->hasFile('product_picture')) {
             $previousPath = 'public/' . $product->product_picture;
@@ -82,12 +90,6 @@ class adminController extends Controller
         $product->product_price = $req->product_price;
         $product->product_stock = $req->product_stock;
         $product->save();
-
-        $user = Auth::user();
-        $activity = new Activity();
-        $activity->name = $user->name;
-        $activity->activity = 'User: ' . $user->name . ' modified the product ' . $product->product_name . ' at ' . Carbon::now();
-        $activity->save();
 
         return redirect()->route('product')->with('success', 'Product Edited Successfully!');
     }
