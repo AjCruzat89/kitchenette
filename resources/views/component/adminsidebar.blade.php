@@ -12,7 +12,7 @@
         </span>Add Sales</a>
     <a href="{{ route('product') }}"><span class="material-symbols-outlined">
             inventory_2
-        </span>Add Products</a>
+        </span>Products</a>
     <a href="#"><span class="material-symbols-outlined">
             attach_money
         </span>Expenses</a>
