@@ -204,6 +204,7 @@
                         @enderror
                         <label class="d-none" for="">ID</label>
                         <input class="d-none" type="text" name="product_id" id="deleteProductId" readonly>
+                        <h3>Are you sure you want to delete this product?</h3>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
