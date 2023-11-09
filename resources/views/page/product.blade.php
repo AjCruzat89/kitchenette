@@ -6,14 +6,17 @@
         <!--===============================================================================================-->
         <div class="d-flex flex-column px-3 py-3" id="mainContent">
             <h1>Products</h1>
-            <div class="d-flex flex-row">
+            <div class="d-flex flex-row gap-2">
                 <button data-bs-toggle="modal" data-bs-target="#addInventory"><span class="material-symbols-outlined">
                         add_circle
                     </span>ADD</button>
+                <button onclick="printData()"><span class="material-symbols-outlined">
+                        print
+                    </span>Print</button>
             </div>
             <!--===============================================================================================-->
             <div class="table-responsive mt-3">
-                <table class="table table-hover">
+                <table class="table table-hover" id="printTable" border="1" cellpadding="10" style="border-collapse: collapse;">
                     <thead>
                         <tr>
                             <th scope="col">product_id</th>
@@ -41,8 +44,14 @@
                                     <td>{{ $product->product_stock }}</td>
                                     <td>
                                         <div class="d-flex flex-row gap-2">
-                                            <span onclick="editModalData(this)" style="--var-color: lightblue;" data-bs-toggle="modal"
-                                                data-bs-target="#editInventory" data-id="{{$product->product_id}}" data-pictureURL="{{ $product->product_pictureURL }}" data-product_name="{{$product->product_name}}" data-product_price="{{$product->product_price}}" data-product_stock="{{ $product->product_stock }}" class="material-symbols-outlined">
+                                            <span onclick="editModalData(this)" style="--var-color: lightblue;"
+                                                data-bs-toggle="modal" data-bs-target="#editInventory"
+                                                data-id="{{ $product->product_id }}"
+                                                data-pictureURL="{{ $product->product_pictureURL }}"
+                                                data-product_name="{{ $product->product_name }}"
+                                                data-product_price="{{ $product->product_price }}"
+                                                data-product_stock="{{ $product->product_stock }}"
+                                                class="material-symbols-outlined">
                                                 edit
                                             </span>
                                             <span style="--var-color: red;" class="material-symbols-outlined">
@@ -204,28 +213,42 @@
         image.style.display = 'block';
     }
 
-    function displayEditImage(event){
+    function displayEditImage(event) {
         var editImage = document.getElementById('productEditImage');
         editImage.src = URL.createObjectURL(event.target.files[0]);
         editImage.style.display = 'block';
     }
 
     function editModalData(element) {
-    const productId = element.getAttribute('data-id');
-    const pictureURL = element.getAttribute('data-pictureURL');
-    const productName = element.getAttribute('data-product_name');
-    const productPrice = element.getAttribute('data-product_price');
-    const productStock = element.getAttribute('data-product_stock');
-    var editImage = document.getElementById('productEditImage');
-    
-    editImage.style.display = 'block';
-    editImage.src = pictureURL;
-    document.getElementById('editProductId').value = productId;
-    document.getElementById('editProductName').value = productName;
-    document.getElementById('editProductPrice').value = productPrice;
-    document.getElementById('editProductStock').value = productStock;
-}
+        const productId = element.getAttribute('data-id');
+        const pictureURL = element.getAttribute('data-pictureURL');
+        const productName = element.getAttribute('data-product_name');
+        const productPrice = element.getAttribute('data-product_price');
+        const productStock = element.getAttribute('data-product_stock');
+        var editImage = document.getElementById('productEditImage');
 
+        editImage.style.display = 'block';
+        editImage.src = pictureURL;
+        document.getElementById('editProductId').value = productId;
+        document.getElementById('editProductName').value = productName;
+        document.getElementById('editProductPrice').value = productPrice;
+        document.getElementById('editProductStock').value = productStock;
+    }
+
+    function printData() {
+        var divToPrint = document.getElementById("printTable");
+        var newWin = window.open("");
+        newWin.document.write('<html><head><title>Print Table</title></head><body>');
+        newWin.document.write('<img style="display: block; margin: 50px auto; width: 180px; height: 150px; filter: drop-shadow(4px 4px 4px black);" src="./img/castiels.png">');
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.document.write('</body></html>');
+        newWin.document.close();
+
+        newWin.onload = function() {
+            newWin.print();
+            newWin.close();
+        };
+    }
 </script>
 <script>
     document.title = 'Kitchenette | Products'
