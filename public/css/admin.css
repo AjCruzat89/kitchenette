@@ -236,3 +236,15 @@ table{
     height: 250px;
     object-fit: cover;
 }
+/* <!--===============================================================================================--> */
+tbody tr td span{
+    font-size: 30px !important;
+    padding: 10px;
+    background-color: var(--var-color);
+    border-radius: 50%;
+}
+
+tbody tr td span:hover{
+    filter: brightness(0.5);
+    cursor: pointer;
+}
