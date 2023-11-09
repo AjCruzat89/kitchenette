@@ -16,7 +16,8 @@
             </div>
             <!--===============================================================================================-->
             <div class="table-responsive mt-3">
-                <table class="table table-hover" id="printTable" border="1" cellpadding="10" style="border-collapse: collapse;">
+                <table class="table table-hover" id="printTable" border="1" cellpadding="10"
+                    style="border-collapse: collapse;">
                     <thead>
                         <tr>
                             <th scope="col">product_id</th>
@@ -30,12 +31,12 @@
                     <tbody>
                         @if (count($products) === 0)
                             <tr>
-                                <td colspan="5">No available data</td>
+                                <td colspan="6">No available data</td>
                             </tr>
                         @else
                             @foreach ($products as $product)
                                 <tr>
-                                    <th scope="col">{{ $product->product_id }}</th>
+                                    <th scope="col">{{ $product->id }}</th>
                                     <td>{{ $product->product_name }}</td>
                                     <td><img class="rounded" src="{{ $product->product_pictureURL }}" alt=""
                                             style="width: 150px; height: 150px; cursor: pointer; object-fit: cover;"
@@ -46,7 +47,7 @@
                                         <div class="d-flex flex-row gap-2">
                                             <span onclick="editModalData(this)" style="--var-color: lightblue;"
                                                 data-bs-toggle="modal" data-bs-target="#editInventory"
-                                                data-id="{{ $product->product_id }}"
+                                                data-id="{{ $product->id }}"
                                                 data-pictureURL="{{ $product->product_pictureURL }}"
                                                 data-product_name="{{ $product->product_name }}"
                                                 data-product_price="{{ $product->product_price }}"
@@ -54,7 +55,9 @@
                                                 class="material-symbols-outlined">
                                                 edit
                                             </span>
-                                            <span style="--var-color: red;" class="material-symbols-outlined">
+                                            <span onclick="deleteModalData(this)" style="--var-color: red;"
+                                                class="material-symbols-outlined" data-bs-toggle="modal"
+                                                data-bs-target="#deleteInventory" data-id="{{ $product->id }}">
                                                 delete
                                             </span>
                                         </div>
@@ -128,56 +131,89 @@
     </div>
 </form>
 <!--===============================================================================================-->
-<div class="modal fade" id="editInventory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel"><span class="material-symbols-outlined">
-                        inventory_2
-                    </span>Edit Inventory</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="d-flex flex-column gap-2">
-                    @error('product_name')
-                        <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                    @enderror
-                    @error('product_picture')
-                        <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                    @enderror
-                    @error('product_price')
-                        <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                    @enderror
-                    @error('product_stocks')
-                        <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                    @enderror
-                    <div class="d-flex justify-content-center">
-                        <img id="productEditImage" src="#" alt="Product Image" style="display: none;" />
-                    </div>
-                    <label for="">ID</label>
-                    <input class="p-2" type="text" name="product_id" id="editProductId" readonly>
-                    <label for="">Product Name</label>
-                    <input class="p-2" type="text" name="product_name" id="editProductName"
-                        placeholder="Enter Product Name...">
-                    <label for="">Product Picture</label>
-                    <input type="file" name="product_picture" id="" onchange="displayEditImage(event)"
-                        accept="image/*" capture="environment">
-                    <label for="">Product Price</label>
-                    <input class="p-2" type="text" name="product_price" id="editProductPrice"
-                        placeholder="Enter Product Price...">
-                    <label for="">Product Stock</label>
-                    <input class="p-2" type="text" name="product_stock" id="editProductStock"
-                        placeholder="Enter Product Stock...">
+<form action="{{ route('editProduct') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <div class="modal fade" id="editInventory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel"><span class="material-symbols-outlined">
+                            inventory_2
+                        </span>Edit Inventory</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="submit" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <div class="modal-body">
+                    <div class="d-flex flex-column gap-2">
+                        @error('product_name')
+                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
+                        @enderror
+                        @error('product_picture')
+                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
+                        @enderror
+                        @error('product_price')
+                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
+                        @enderror
+                        @error('product_stocks')
+                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
+                        @enderror
+                        <div class="d-flex justify-content-center">
+                            <img id="productEditImage" src="#" alt="Product Image" style="display: none;" />
+                        </div>
+                        <label for="">ID</label>
+                        <input class="p-2" type="text" name="product_id" id="editProductId" readonly>
+                        <label for="">Product Name</label>
+                        <input class="p-2" type="text" name="product_name" id="editProductName"
+                            placeholder="Enter Product Name...">
+                        <label for="">Product Picture</label>
+                        <input type="file" name="product_picture" id=""
+                            onchange="displayEditImage(event)" accept="image/*" capture="environment">
+                        <label for="">Product Price</label>
+                        <input class="p-2" type="text" name="product_price" id="editProductPrice"
+                            placeholder="Enter Product Price...">
+                        <label for="">Product Stock</label>
+                        <input class="p-2" type="text" name="product_stock" id="editProductStock"
+                            placeholder="Enter Product Stock...">
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
+<!--===============================================================================================-->
+<form action="{{ route('deleteProduct') }}" method="POST">
+    @csrf
+    <div class="modal fade" id="deleteInventory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel"><span class="material-symbols-outlined">
+                            inventory_2
+                        </span>Delete Inventory</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-column gap-2">
+                        @error('product_id')
+                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
+                        @enderror
+                        <label class="d-none" for="">ID</label>
+                        <input class="d-none" type="text" name="product_id" id="deleteProductId" readonly>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <!--===============================================================================================-->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -185,7 +221,7 @@
             if ("{{ session('success') }}") {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Product Added Successfully!',
+                    title: '{{ session('success') }}',
                     showCancelButton: false,
                     showConfirmButton: false,
                     timer: 1000
@@ -235,11 +271,19 @@
         document.getElementById('editProductStock').value = productStock;
     }
 
+    function deleteModalData(element) {
+        const productId = element.getAttribute('data-id');
+
+        document.getElementById('deleteProductId').value = productId;
+    }
+
     function printData() {
         var divToPrint = document.getElementById("printTable");
         var newWin = window.open("");
         newWin.document.write('<html><head><title>Print Table</title></head><body>');
-        newWin.document.write('<img style="display: block; margin: 50px auto; width: 180px; height: 150px; filter: drop-shadow(4px 4px 4px black);" src="./img/castiels.png">');
+        newWin.document.write(
+            '<img style="display: block; margin: 50px auto; width: 180px; height: 150px; filter: drop-shadow(4px 4px 4px black);" src="./img/castiels.png">'
+        );
         newWin.document.write(divToPrint.outerHTML);
         newWin.document.write('</body></html>');
         newWin.document.close();

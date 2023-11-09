@@ -35,4 +35,6 @@ Route::middleware(['admin'])->group(function () {
     Route::GET('activity', [adminController::class, 'activityPage'])->name('activity');
     Route::GET('product', [adminController::class, 'productPage'])->name('product');
     Route::POST('addProduct', [adminController::class, 'addProduct'])->name('addProduct');
+    Route::POST('editProduct', [adminController::class, 'editProduct'])->name('editProduct');
+    Route::POST('deleteProduct', [adminController::class, 'deleteProduct'])->name('deleteProduct');
 });
