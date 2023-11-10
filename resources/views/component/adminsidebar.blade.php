@@ -9,7 +9,7 @@
         </span>Home</a>
     <a href="#"><span class="material-symbols-outlined">
             point_of_sale
-        </span>Add Sales</a>
+        </span>Sales</a>
     <a href="{{ route('product') }}"><span class="material-symbols-outlined">
             inventory_2
         </span>Products</a>
