@@ -93,18 +93,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex flex-column gap-2">
-                        @error('product_name')
-                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                        @enderror
-                        @error('product_picture')
-                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                        @enderror
-                        @error('product_price')
-                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                        @enderror
-                        @error('product_stocks')
-                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                        @enderror
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger d-flex align-items-center">{{ $error }}</div>
+                        @endforeach
                         <div class="d-flex justify-content-center">
                             <img id="productImage" src="#" alt="Product Image" style="display: none;" />
                         </div>
@@ -145,18 +136,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex flex-column gap-2">
-                        @error('product_name')
-                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                        @enderror
-                        @error('product_picture')
-                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                        @enderror
-                        @error('product_price')
-                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                        @enderror
-                        @error('product_stocks')
-                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                        @enderror
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger d-flex align-items-center">{{ $error }}</div>
+                        @endforeach
                         <div class="d-flex justify-content-center">
                             <img id="productEditImage" src="#" alt="Product Image" style="display: none;" />
                         </div>
@@ -199,9 +181,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex flex-column gap-2">
-                        @error('product_id')
-                            <div class="alert alert-danger d-flex align-items-center">{{ $message }}</div>
-                        @enderror
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger d-flex align-items-center">{{ $error }}</div>
+                        @endforeach
                         <label class="d-none" for="">ID</label>
                         <input class="d-none" type="text" name="product_id" id="deleteProductId" readonly>
                         <h3>Are you sure you want to delete this product?</h3>
