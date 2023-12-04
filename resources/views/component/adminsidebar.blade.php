@@ -7,6 +7,9 @@
     <a class="mt-4" href="{{ route('admin') }}"><span class="material-symbols-outlined">
             home
         </span>Home</a>
+    <a href=""><span class="material-symbols-outlined">
+        person
+        </span>Users</a>
     <a href="#"><span class="material-symbols-outlined">
             point_of_sale
         </span>Sales</a>

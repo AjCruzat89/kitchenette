@@ -41,7 +41,7 @@
                                     <td><img class="rounded" src="{{ $product->product_pictureURL }}" alt=""
                                             style="width: 150px; height: 150px; cursor: pointer; object-fit: cover;"
                                             onclick="window.open('{{ $product->product_pictureURL }}' , '_blank')"></td>
-                                    <td>{{ $product->product_price }}</td>
+                                    <td>₱{{ number_format($product->product_price) }}</td>
                                     <td>{{ $product->product_stock }}</td>
                                     <td>
                                         <div class="d-flex flex-row gap-2">

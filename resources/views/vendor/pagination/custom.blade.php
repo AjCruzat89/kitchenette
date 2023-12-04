@@ -2,7 +2,7 @@
     <ul class="pagination">
         @php
             $currentPage = $paginator->currentPage();
-            $numLinks = 10; // Total number of page buttons to display
+            $numLinks = 5; // Total number of page buttons to display
             $halfTotalLinks = floor($numLinks / 2);
             $from = max(1, $currentPage - $halfTotalLinks);
             $to = min($currentPage + $halfTotalLinks, $paginator->lastPage());
