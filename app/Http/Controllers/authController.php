@@ -23,6 +23,18 @@ class authController extends Controller
             'email' => 'required|email|unique:users'
         ]);
 
+        $token = Str::random(64);
+        DB::table('email_verification')->insert([
+            'email' => $req->email,
+            'token' => $token,
+            'created_at' => Carbon::now()
+        ]);
+
+        Mail::send("emails.verification", ['token' => $token], function ($message) use ($req) {
+            $message->to($req->email);
+            $message->subject("Email Verification");
+        });
+
         $data['name'] = $req->input('name');
         $data['password'] = Hash::make($req->input('password'));
         $data['email'] = $req->input('email');
@@ -30,7 +42,23 @@ class authController extends Controller
         if (!$user) {
             return redirect(route('registerPage'))->with('error', 'Registration Unsuccessful!.');
         }
-        return redirect(route('loginPage'))->with('success', 'Registration successful!.');
+        return redirect(route('loginPage'))->with('success', 'Email Verification Sent!.');
+    }
+    //<!--===============================================================================================-->
+    public function verifyEmail(Request $req){
+        $token = $req->token;
+
+        $verification = DB::table('email_verification')->where('token', $token)->first();
+        if($verification){
+            $user = User::where('email', $verification->email)->first();
+            $user->verified = 1;
+            $user->save();
+            DB::table('email_verification')->where('token', $token)->delete();
+            return redirect(route('loginPage'))->with('success', 'Email Verified!!!.');
+        }
+        else{
+            return redirect(route('loginPage'))->with('error', 'Invalid Token!!!.');
+        }
     }
     //<!--===============================================================================================-->
     public function Login(Request $req)
@@ -39,6 +67,11 @@ class authController extends Controller
             'email' => 'required',
             'password' => 'required'
         ]);
+
+        $user = User::where('email', $req->input('email'))->first();
+        if($user->verified == 0){
+            return redirect(route('loginPage'))->withErrors(['email' => 'User Not Verified!'])->withInput();
+        }
 
         $credentials = $req->only('email', 'password');
         if (Auth::attempt($credentials)) {

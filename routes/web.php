@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::VIEW('/', './page/home')->name('home');
+ROUTE::GET('verification/{token}', [authController::class, 'verifyEmail'])->name('verification');
 Route::POST('forgot-password', [authController::class, 'ForgotPasswordRequest'])->name('forgotPasswordRequest');
 Route::POST('reset-password', [authController::class, 'ResetPasswordRequest'])->name('resetPasswordRequest');
 Route::POST('registerRequest', [authController::class, 'Register'])->name('registerRequest');
