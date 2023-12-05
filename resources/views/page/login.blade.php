@@ -6,15 +6,9 @@
 
         <div class="box d-flex flex-column p-4 p-lg-5" data-aos="fade-up">
             <h1>Login</h1>
-            @if(session('error'))
-            <div class="alert alert-danger text-center">{{ session('error') }}</div>
-            @endif
-            @error('email')
-                <div class="alert alert-danger text-center">{{ $message }}</div>
-            @enderror
-            @error('password')
-                <div class="alert alert-danger text-center">{{ $message }}</div>
-            @enderror
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger d-flex align-items-center">{{ $error }}</div>
+            @endforeach
             <label for="" class="mt-3">Email</label>
             <input type="text" name="email" id="" placeholder="Enter Username...">
             <label for="" class="mt-3">Password</label>
