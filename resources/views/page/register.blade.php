@@ -35,9 +35,6 @@
                 showConfirmButton: false,
                 timer: 1000
             });
-            setTimeout(() => {
-                window.location.href = '{{ route('loginPage') }}'
-            }, 1000);
         }
     });
 </script>

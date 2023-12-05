@@ -30,7 +30,7 @@ class authController extends Controller
         if (!$user) {
             return redirect(route('registerPage'))->with('error', 'Registration Unsuccessful!.');
         }
-        return redirect(route('registerPage'))->with('success', 'Registration successful!.');
+        return redirect(route('loginPage'))->with('success', 'Registration successful!.');
     }
     //<!--===============================================================================================-->
     public function Login(Request $req)
