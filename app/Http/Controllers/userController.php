@@ -57,4 +57,18 @@ class userController extends Controller
         }
     }
     //<!--===============================================================================================-->
+    public function cartPage(Request $req)
+    {
+        $carts = Cart::select('cart.product_id','products.product_name', 'products.product_picture', 'products.product_price', 'cart.quantity')
+            ->join('products', 'cart.product_id', '=', 'products.id')
+            ->join('users', 'cart.user_id', '=', 'users.id')
+            ->where('cart.user_id', '=', auth()->user()->id)
+            ->get();
+
+        foreach ($carts as $cart) {
+            $cart->product_pictureURL = asset('storage/' . $cart->product_picture);
+        }
+
+        return view('page.cart', ['carts' => $carts]);
+    }
 }

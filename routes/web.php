@@ -23,9 +23,8 @@ Route::POST('reset-password', [authController::class, 'ResetPasswordRequest'])->
 Route::POST('registerRequest', [authController::class, 'Register'])->name('registerRequest');
 Route::POST('loginRequest', [authController::class, 'Login'])->name('loginRequest');
 Route::GET('logoutRequest', [authController::class, 'Logout'])->name('logoutRequest');
-Route::view('admin', './page/admin')->name('admin');
 ROUTE::GET('menu', [userController::class, 'menuPage'])->name('menuPage');
-ROUTE::VIEW('cart', 'page.cart')->name('cart');
+ROUTE::GET('cart', [userController::class, 'cartPage'])->name('cart');
 
 ROUTE::POST('addToCart', [userController::class, 'addToCart'])->name('addToCart');
 
