@@ -6,6 +6,9 @@
 
         <div class="box d-flex flex-column p-4 p-lg-5" data-aos="fade-up">
             <h1>Login</h1>
+            @if(session('error'))
+            <div class="alert alert-danger d-flex align-items-center">{{ session('error') }}</div>
+            @endif
             @foreach ($errors->all() as $error)
                 <div class="alert alert-danger d-flex align-items-center">{{ $error }}</div>
             @endforeach
