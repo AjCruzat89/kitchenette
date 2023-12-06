@@ -10,6 +10,7 @@
                 close
                 </span>
             <a href="{{ route('home') }}">Home</a>
+            <a href="{{ route('menuPage') }}">Menu</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
             @if (auth()->user())

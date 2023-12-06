@@ -35,10 +35,11 @@ class authController extends Controller
             $message->subject("Email Verification");
         });
 
-        $data['name'] = $req->input('name');
-        $data['password'] = Hash::make($req->input('password'));
-        $data['email'] = $req->input('email');
-        $user = User::create($data);
+        $user = new User();
+        $user->name = $req->input('name');
+        $user->password = Hash::make($req->input('password'));
+        $user->email = $req->input('email');
+        $user->save();
         if (!$user) {
             return redirect(route('registerPage'))->with('error', 'Registration Unsuccessful!.');
         }

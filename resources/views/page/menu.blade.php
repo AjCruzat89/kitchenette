@@ -61,27 +61,31 @@
     </div>
 
     @if (count($products) > 0)
-        <button class="mb-4 p-2" data-aos="fade-up" id="viewAll">View All</button>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">
+            @foreach ($products as $product)
+                <div class="col" data-aos="fade-up">
+                    <form action="{{ route('addToCart') }}" method="POST">
+                        @csrf
+                        <div class="d-flex flex-column rounded overflow-hidden" id="bodyContentBox">
+                            <img class="img-fluid" src="{{ $product->product_pictureURL }}"
+                                alt="">
+                            <div class="d-flex flex-column p-2">
+                                <input class="d-none" type="number" name="product_id" id=""
+                                    value="{{ $product->id }}" readonly>
+                                <h1>{{ $product->product_name }}</h1>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h2>Price: ₱{{ number_format($product->product_price) }}</h2>
+                                    <input type="number" name="quantity" id="" value="1" min="0"
+                                        max="99" pattern="\d{1,2}" maxlength="2"
+                                        onInput="this.value = this.value.slice(0, 2)" style="height:30px;">
+                                </div>
 
-        <div class="swiper mb-4" data-aos="fade-up">
-            <div class="swiper-wrapper">
-                @foreach($products as $product)
-                <div class="swiper-slide">
-                    <div class="d-flex flex-column">
-                        <img class="img-fluid" src="{{$product->product_pictureURL}}" alt="">
-                        <div class="d-flex flex-column p-2" id="swiperDetails">
-                            <h1>{{$product->product_name}}</h1>
-                            <h2>Price: ₱{{number_format($product->product_price)}}</h2>
+                            </div>
+                            <button type="submit" class="p-3">Add To Cart</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
-                @endforeach
-            </div>
-        </div>
-
-        <div class="d-flex justify-content-center gap-2 mb-4" id="swiperControls">
-            <i class="bi bi-caret-left-fill"></i>
-            <i class="bi bi-caret-right-fill"></i>
+            @endforeach
         </div>
     @else
         <div class="alert alert-danger text-center p-5 mb-4" data-aos="fade-up">No Products Available.</div>
@@ -89,20 +93,18 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        @if (auth()->check())
-            if ("{{ session('success') }}") {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Hi! {{ auth()->user()->name }}.',
-                    showCancelButton: false,
-                    showConfirmButton: false,
-                    timer: 1000
-                });
-            }
-        @endif
+        if ("{{ session('success') }}") {
+            Swal.fire({
+                icon: 'success',
+                title: '{{session('success')}}',
+                showCancelButton: false,
+                showConfirmButton: false,
+                timer: 1000
+            });
+        }
     });
 </script>
 <script>
-    document.title = 'Kitchenette | Home'
+    document.title = 'Kitchenette | Menu'
 </script>
 @include('component.footer')

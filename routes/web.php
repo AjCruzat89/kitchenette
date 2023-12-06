@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\adminController;
 use App\Http\Controllers\authController;
+use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::VIEW('/', './page/home')->name('home');
+Route::GET('/', [userController::class, 'homePage'])->name('home');
 ROUTE::GET('verification/{token}', [authController::class, 'verifyEmail'])->name('verification');
 Route::POST('forgot-password', [authController::class, 'ForgotPasswordRequest'])->name('forgotPasswordRequest');
 Route::POST('reset-password', [authController::class, 'ResetPasswordRequest'])->name('resetPasswordRequest');
@@ -23,6 +24,9 @@ Route::POST('registerRequest', [authController::class, 'Register'])->name('regis
 Route::POST('loginRequest', [authController::class, 'Login'])->name('loginRequest');
 Route::GET('logoutRequest', [authController::class, 'Logout'])->name('logoutRequest');
 Route::view('admin', './page/admin')->name('admin');
+ROUTE::GET('menu', [userController::class, 'menuPage'])->name('menuPage');
+
+ROUTE::POST('addToCart', [userController::class, 'addToCart'])->name('addToCart');
 
 Route::middleware(['loggedIn'])->group(function () {
     Route::VIEW('register', './page/register')->name('registerPage');

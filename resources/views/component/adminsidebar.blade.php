@@ -9,22 +9,10 @@
         </span>Home</a>
     <a href=""><span class="material-symbols-outlined">
         person
-        </span>Users</a>
-    <a href="#"><span class="material-symbols-outlined">
-            point_of_sale
-        </span>Sales</a>
+        </span>Users(NOT YET)</a>
     <a href="{{ route('product') }}"><span class="material-symbols-outlined">
             inventory_2
         </span>Products</a>
-    <a href="#"><span class="material-symbols-outlined">
-            attach_money
-        </span>Expenses</a>
-    <a href="#"><span class="material-symbols-outlined">
-            report
-        </span>Reports</a>
-    <a href="#"><span class="material-symbols-outlined">
-            settings
-        </span>Settings</a>
     <a href="{{route('activity')}}"><span class="material-symbols-outlined">
             menu_book
         </span>Activity Log</a>

@@ -132,13 +132,12 @@ body {
 
 #navbar button {
     background-color: #B42730;
-    border: 1px solid #B42730;
+    border: 0px solid #B42730;
     font-family: 'Montserrat', sans-serif;
 }
 
 #navbar button:hover {
-    background-color: #7e1b22;
-    border: 1px solid #7e1b22;
+    filter: brightness(0.6);
 }
 
 #navbar span{
@@ -164,10 +163,24 @@ body {
         height: 100vh;
         background-color: black;
         z-index: 1000;
+        animation: left;
+        animation-iteration-count: 1;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
     }
 
     #menuLists > :last-child {
         margin-top: auto !important;
+    }
+
+    @keyframes left {
+        from{
+            transform: translateX(-500px);
+        }
+        
+        to{
+            transform: translateX(0px);
+        }
     }
 }
 
@@ -207,6 +220,17 @@ body {
     text-decoration: underline;
     text-decoration-color: #B42730;
     text-underline-offset: 5px;
+}
+
+#viewAll{
+    background-color: #b42730;
+    border-radius: 10px;
+    color: white;
+    border: 0px solid transparent;
+}
+
+#viewAll:hover{
+    filter: brightness(0.6);
 }
 
 .swiper {
@@ -250,4 +274,38 @@ body {
 
 #swiperControls i:hover{
     background-color: #7e1b22;
+}
+
+#bodyContentBox{
+    background-color: #B42730;
+    color: white !important;
+}
+
+#bodyContentBox h1, #bodyContentBox h2{
+    text-decoration: none;
+}
+
+#bodyContentBox h2{
+    font-size: 20px;
+}
+
+#bodyContentBox button{
+    background-color: white;
+    border: 0px solid transparent;
+    color: black;
+}
+
+#bodyContentBox button:hover{
+    filter: brightness(0.6);
+}
+
+#bodyContentBox input[type="number"]{
+    border-radius: 10px;
+    padding: 5px;
+    border: 0px solid transparent;
+}
+
+#bodyContentBox img{
+    height: 350px;
+    object-fit: cover;
 }
