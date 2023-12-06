@@ -61,20 +61,21 @@
     </div>
 
     @if (count($products) > 0)
-        <button class="mb-4 p-2" data-aos="fade-up" id="viewAll" onclick="window.location.href = '{{route('menuPage')}}' ">View All</button>
+        <button class="mb-4 p-2" data-aos="fade-up" id="viewAll"
+            onclick="window.location.href = '{{ route('menuPage') }}' ">View All</button>
 
         <div class="swiper mb-4" data-aos="fade-up">
             <div class="swiper-wrapper">
-                @foreach($products as $product)
-                <div class="swiper-slide">
-                    <div class="d-flex flex-column">
-                        <img class="img-fluid" src="{{$product->product_pictureURL}}" alt="">
-                        <div class="d-flex flex-column p-2" id="swiperDetails">
-                            <h1>{{$product->product_name}}</h1>
-                            <h2>Price: ₱{{number_format($product->product_price)}}</h2>
+                @foreach ($products as $product)
+                    <div class="swiper-slide">
+                        <div class="d-flex flex-column">
+                            <img class="img-fluid" src="{{ $product->product_pictureURL }}" alt="">
+                            <div class="d-flex flex-column p-2" id="swiperDetails">
+                                <h1>{{ $product->product_name }}</h1>
+                                <h2>Price: ₱{{ number_format($product->product_price) }}</h2>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
             </div>
         </div>
@@ -99,6 +100,15 @@
                     timer: 1000
                 });
             }
+        @endif
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: '{{session('success')}}',
+                showCancelButton: false,
+                showConfirmButton: false,
+                timer: 1000
+            });
         @endif
     });
 </script>

@@ -173,7 +173,7 @@ class authController extends Controller
             }
 
             Auth::logout();
-            return redirect()->route('loginPage')->with('success', 'Logged Out Successfully.');
+            return redirect()->route('home')->with('success', 'Logged Out Successfully.');
         }
     }
     //<!--===============================================================================================-->
