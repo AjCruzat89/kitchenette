@@ -5,12 +5,13 @@
             <img src="./img/logo.jpg" alt="" style="width: 150px; height: 80px; cursor: pointer;"
                 onclick="window.location.href = '{{ route('home') }}'">
         </div>
-        <div class="d-none d-md-flex justify-content-center gap-4 flex-grow-1">
+        <div class="d-none d-md-flex justify-content-center gap-4" id="menuLists">
+            <span class="d-flex d-md-none material-symbols-outlined d-flex justify-content-end" id="closeButton">
+                close
+                </span>
             <a href="{{ route('home') }}">Home</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
-        </div>
-        <div class="d-flex justify-content-end">
             @if (auth()->user())
                 <form action="{{route('logoutRequest')}}" method="get">
                     <button class="btn btn-primary" type="submit">Logout</button>
@@ -19,5 +20,8 @@
                 <button class="btn btn-primary" type="submit" onclick="window.location.href = '{{route('loginPage')}}'">Login</button>
             @endif
         </div>
+        <span class="material-symbols-outlined d-flex d-md-none" id="menuButton">
+            menu
+            </span>
     </nav>
 </div>
