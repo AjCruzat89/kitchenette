@@ -43,14 +43,14 @@ class userController extends Controller
             if ($productExists) {
                 $productExists->quantity += $req->input('quantity');
                 $productExists->save();
-                return redirect()->route('menuPage')->with('success', 'Successfully Updated The Quantity Of Product!');
+                return back()->with('success', 'Successfully Updated The Quantity Of Product!');
             } else {
                 $cart = new Cart();
                 $cart->user_id = $user->id;
                 $cart->product_id = $req->input('product_id');
                 $cart->quantity = $req->input('quantity');
                 $cart->save();
-                return redirect()->route('menuPage')->with('success', 'Successfully Added To Cart!');
+                return back()->with('success', 'Successfully Added To Cart!');
             }
         } else {
             return redirect()->route('loginPage');

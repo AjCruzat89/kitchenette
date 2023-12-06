@@ -11,9 +11,12 @@
                 </span>
             <a href="{{ route('home') }}">Home</a>
             <a href="{{ route('menuPage') }}">Menu</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            @if (auth()->user())
+            @auth
+                <a href="{{ route('cart') }}">Cart(NOT FINISHED)</a>
+            @endauth 
+            <a href="#">About(NOT YET)</a>
+            <a href="#">Contact(NOT YET)</a>
+            @auth
                 <form action="{{route('logoutRequest')}}" method="get">
                     <button class="btn btn-primary" type="submit">Logout</button>
                 </form>

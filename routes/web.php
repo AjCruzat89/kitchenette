@@ -25,6 +25,7 @@ Route::POST('loginRequest', [authController::class, 'Login'])->name('loginReques
 Route::GET('logoutRequest', [authController::class, 'Logout'])->name('logoutRequest');
 Route::view('admin', './page/admin')->name('admin');
 ROUTE::GET('menu', [userController::class, 'menuPage'])->name('menuPage');
+ROUTE::VIEW('cart', 'page.cart')->name('cart');
 
 ROUTE::POST('addToCart', [userController::class, 'addToCart'])->name('addToCart');
 

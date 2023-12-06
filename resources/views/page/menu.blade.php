@@ -57,7 +57,7 @@
 <!--===============================================================================================-->
 <div class="container" id="bodyContent">
     <div class="d-flex my-4" data-aos="fade-up">
-        <h1>PRODUCTS</h1>
+        <h1>FOOD MENU</h1>
     </div>
 
     @if (count($products) > 0)

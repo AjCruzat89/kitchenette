@@ -15,7 +15,7 @@ class adminController extends Controller
     //<!--===============================================================================================-->
     public function adminPage()
     {
-        $userCount = User::where('user_role', '!=', 'admin')->count();
+        $userCount = User::where('user_role', '!=', 'admin')->where('verified', '=', '1')->count();
         return view('page.admin', ['userCount' => $userCount]);
     }
     //<!--===============================================================================================-->
