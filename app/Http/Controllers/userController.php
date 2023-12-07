@@ -17,7 +17,9 @@ class userController extends Controller
     //<!--===============================================================================================-->
     public function homePage(Request $req)
     {
-        $products = Product::where('product_stock', '!=', '0')->get();
+        $products = Product::where('product_stock', '!=', '0')
+        ->orderBy('created_at', 'desc')
+        ->get();
         foreach ($products as $product) {
             $product->product_pictureURL = asset('storage/' . $product->product_picture);
         }
@@ -26,24 +28,28 @@ class userController extends Controller
     }
     //<!--===============================================================================================-->
     public function menuPage(Request $req)
-    {   
-        if($user = Auth::user()){
+    {
+        if ($user = Auth::user()) {
             $products = Product::leftJoin('cart', function ($join) {
                 $join->on('products.id', '=', 'cart.product_id')
                     ->where('cart.user_id', '=', auth()->user()->id);
             })
-            ->whereRaw('products.product_stock > IFNULL(cart.quantity, 0)')
-            ->select('products.id', 'products.product_name', 'products.product_picture', 'products.product_price')
-            ->get();
-        
-        
+                ->whereRaw('products.product_stock > IFNULL(cart.quantity, 0)')
+                ->select('products.id', 'products.product_name', 'products.product_picture', 'products.product_price')
+                ->orderBy('products.created_at', 'desc')
+                ->get();
+
+
             foreach ($products as $product) {
                 $product->product_pictureURL = asset('storage/' . $product->product_picture);
             }
             return view('page.menu', ['products' => $products]);
         }
 
-        $products = Product::where('product_stock', '!=', '0')->get();
+        $products = Product::where('product_stock', '!=', '0')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         foreach ($products as $product) {
             $product->product_pictureURL = asset('storage/' . $product->product_picture);
         }

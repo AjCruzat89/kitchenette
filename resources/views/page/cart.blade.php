@@ -87,7 +87,7 @@
                                 <td>{{ $cart->product_name }}</td>
                                 <td><img class="img-fluid" style="width: 150px; height: 150px; object-fit: cover;"
                                         src="{{ $cart->product_pictureURL }}" alt=""></td>
-                                <td>{{ $cart->product_price }}</td>
+                                <td>₱{{ number_format($cart->product_price) }}</td>
                                 <td>{{ $cart->quantity }}</td>
                                 <td>{{ $cart->total }}</td>
                             </tr>
