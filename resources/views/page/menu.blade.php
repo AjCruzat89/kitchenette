@@ -103,6 +103,18 @@
             });
         }
     });
+
+    @if (session('error'))
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: '{{ session('error')}}',
+                showCancelButton: false,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        });
+    @endif
 </script>
 <script>
     document.title = 'Kitchenette | Menu'

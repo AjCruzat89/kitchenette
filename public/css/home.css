@@ -233,12 +233,23 @@ body {
     filter: brightness(0.6);
 }
 
+#deleteAll{
+    background-color: #b42730;
+    border-radius: 10px;
+    color: white;
+    border: 0px solid transparent; 
+}
+
+#deleteAll:hover{
+    filter: brightness(0.6);
+}
+
 .swiper {
     width: 100%;  
 }
 
 .swiper-slide{
-    background-color: white;
+    background-color: #B42730;
     border-radius: 15px;
     overflow: hidden;
     color: white !important; 
@@ -308,4 +319,9 @@ body {
 #bodyContentBox img{
     height: 350px;
     object-fit: cover;
+}
+
+input[type="checkbox"]{
+    width: 18px;
+    height: 18px;
 }

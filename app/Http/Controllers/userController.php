@@ -26,7 +26,22 @@ class userController extends Controller
     }
     //<!--===============================================================================================-->
     public function menuPage(Request $req)
-    {
+    {   
+        if($user = Auth::user()){
+            $products = Product::leftJoin('cart', function ($join) {
+                $join->on('products.id', '=', 'cart.product_id')
+                    ->where('cart.user_id', '=', 1);
+            })
+            ->whereNull('cart.product_id')
+            ->select('products.id', 'products.product_name', 'products.product_picture', 'products.product_price')
+            ->get();
+
+            foreach ($products as $product) {
+                $product->product_pictureURL = asset('storage/' . $product->product_picture);
+            }
+            return view('page.menu', ['products' => $products]);
+        }
+
         $products = Product::where('product_stock', '!=', '0')->get();
         foreach ($products as $product) {
             $product->product_pictureURL = asset('storage/' . $product->product_picture);
@@ -37,18 +52,27 @@ class userController extends Controller
     //<!--===============================================================================================-->
     public function addToCart(Request $req)
     {
+        $productId = $req->input('product_id');
+        $requestedQuantity = $req->input('quantity');
+
+        $product = Product::where('id', $productId)->first();
+
+        if ($requestedQuantity > $product->product_stock) {
+            return back()->with('error', 'Remaining Stock Is: ' . $product->product_stock);
+        }
+
         if ($user = Auth::user()) {
-            $productExists = Cart::where('user_id', $user->id)->where('product_id', $req->input('product_id'))->first();
+            $productExists = Cart::where('user_id', $user->id)->where('product_id', $productId)->first();
 
             if ($productExists) {
-                $productExists->quantity += $req->input('quantity');
+                $productExists->quantity += $requestedQuantity;
                 $productExists->save();
                 return back()->with('success', 'Successfully Updated The Quantity Of Product!');
             } else {
                 $cart = new Cart();
                 $cart->user_id = $user->id;
-                $cart->product_id = $req->input('product_id');
-                $cart->quantity = $req->input('quantity');
+                $cart->product_id = $productId;
+                $cart->quantity = $requestedQuantity;
                 $cart->save();
                 return back()->with('success', 'Successfully Added To Cart!');
             }
@@ -59,7 +83,7 @@ class userController extends Controller
     //<!--===============================================================================================-->
     public function cartPage(Request $req)
     {
-        $carts = Cart::select('cart.product_id','products.product_name', 'products.product_picture', 'products.product_price', 'cart.quantity')
+        $carts = Cart::select('cart.product_id', 'products.product_name', 'products.product_picture', 'products.product_price', 'cart.quantity')
             ->join('products', 'cart.product_id', '=', 'products.id')
             ->join('users', 'cart.user_id', '=', 'users.id')
             ->where('cart.user_id', '=', auth()->user()->id)
@@ -67,8 +91,11 @@ class userController extends Controller
 
         foreach ($carts as $cart) {
             $cart->product_pictureURL = asset('storage/' . $cart->product_picture);
+            $cart->total = $cart->product_price * $cart->quantity;
         }
 
-        return view('page.cart', ['carts' => $carts]);
+        $cartGrandTotal = $carts->sum('total');
+        return view('page.cart', ['carts' => $carts, 'cartGrandTotal' => $cartGrandTotal]);
     }
+    //<!--===============================================================================================-->
 }

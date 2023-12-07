@@ -60,32 +60,51 @@
 
         <h1>MY CART</h1>
 
-        @if(count($carts) > 0)
-        <div class="table-responsive mt-4 rounded">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">product_name</th>
-                        <th scope="col">product_picture</th>
-                        <th scope="col">product_price</th>
-                        <th scope="col">quantity</th>
-                        <th scope="col">editas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($carts as $cart)
+        @if (count($carts) > 0)
+            <div class="d-flex flex-row mt-4">
+                <button class="p-2" id="deleteAll">Delete All</button>
+            </div>
+            <div class="table-responsive mt-3 rounded">
+                <table class="table table-hover">
+                    <thead>
                         <tr>
-                            <td>{{ $cart->product_name }}</td>
-                            <td><img class="img-fluid" style="width: 150px; height: 150px; object-fit: cover;" src="{{ $cart->product_pictureURL }}" alt=""></td>
-                            <td>{{ $cart->product_price }}</td>
-                            <td>{{ $cart->quantity }}</td>
+                            <th>Select</th>
+                            <th scope="col">product_name</th>
+                            <th scope="col">product_picture</th>
+                            <th scope="col">product_price</th>
+                            <th scope="col">quantity</th>
+                            <th scope="col">total</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        @foreach ($carts as $cart)
+                            <tr>
+                                <td>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <input type="checkbox" name="" id="">
+                                    </div>
+                                </td>
+                                <td>{{ $cart->product_name }}</td>
+                                <td><img class="img-fluid" style="width: 150px; height: 150px; object-fit: cover;"
+                                        src="{{ $cart->product_pictureURL }}" alt=""></td>
+                                <td>{{ $cart->product_price }}</td>
+                                <td>{{ $cart->quantity }}</td>
+                                <td>{{ $cart->total }}</td>
+                            </tr>
+                        @endforeach
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><div class="d-flex justify-content-end">Grand Total:</div></td>
+                                <td> ₱{{ number_format($cartGrandTotal)}}</td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
         @else
-        <div class="alert alert-danger text-center p-5 mt-4" data-aos="fade-up">No Products On Cart.</div>
+            <div class="alert alert-danger text-center p-5 mt-4" data-aos="fade-up">No Products On Cart.</div>
         @endif
     </div>
 </div>
