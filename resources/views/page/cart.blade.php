@@ -66,7 +66,7 @@
             </div>
             <div class="table-responsive mt-3 rounded">
                 <table class="table table-hover">
-                    <thead>
+                    <thead class="table-danger">
                         <tr>
                             <th>Select</th>
                             <th scope="col">product_name</th>
