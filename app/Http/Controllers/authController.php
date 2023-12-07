@@ -65,13 +65,13 @@ class authController extends Controller
     public function Login(Request $req)
     {
         $req->validate([
-            'email' => 'required',
+            'email' => 'required|exists:users',
             'password' => 'required'
         ]);
 
         $user = User::where('email', $req->input('email'))->first();
         if($user->verified == 0){
-            return redirect(route('loginPage'))->withErrors(['email' => 'User Not Verified!'])->withInput();
+            return redirect()->route('loginPage')->error('error', 'User Not Verified!');
         }
 
         $credentials = $req->only('email', 'password');

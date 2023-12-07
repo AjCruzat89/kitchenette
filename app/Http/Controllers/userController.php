@@ -30,12 +30,13 @@ class userController extends Controller
         if($user = Auth::user()){
             $products = Product::leftJoin('cart', function ($join) {
                 $join->on('products.id', '=', 'cart.product_id')
-                    ->where('cart.user_id', '=', 1);
+                    ->where('cart.user_id', '=', auth()->user()->id);
             })
-            ->whereNull('cart.product_id')
+            ->whereRaw('products.product_stock > IFNULL(cart.quantity, 0)')
             ->select('products.id', 'products.product_name', 'products.product_picture', 'products.product_price')
             ->get();
-
+        
+        
             foreach ($products as $product) {
                 $product->product_pictureURL = asset('storage/' . $product->product_picture);
             }
@@ -57,11 +58,12 @@ class userController extends Controller
 
         $product = Product::where('id', $productId)->first();
 
-        if ($requestedQuantity > $product->product_stock) {
-            return back()->with('error', 'Remaining Stock Is: ' . $product->product_stock);
-        }
-
         if ($user = Auth::user()) {
+
+            if ($requestedQuantity > $product->product_stock) {
+                return back()->with('error', 'Remaining Stock Is: ' . $product->product_stock);
+            }
+
             $productExists = Cart::where('user_id', $user->id)->where('product_id', $productId)->first();
 
             if ($productExists) {
