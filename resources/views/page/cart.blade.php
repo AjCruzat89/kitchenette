@@ -69,7 +69,7 @@
                         <th scope="col">product_picture</th>
                         <th scope="col">product_price</th>
                         <th scope="col">quantity</th>
-                        <th scope="col">edit</th>
+                        <th scope="col">editas</th>
                     </tr>
                 </thead>
                 <tbody>
