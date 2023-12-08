@@ -80,27 +80,29 @@
                         @foreach ($carts as $cart)
                             <tr>
                                 <td>
-                                    <div class="d-flex justify-content-center align-items-center">
+                                    <div class="d-flex justify-content-center">
                                         <input type="checkbox" name="" id="">
                                     </div>
                                 </td>
                                 <td>{{ $cart->product_name }}</td>
-                                <td><img class="img-fluid" style="width: 150px; height: 150px; object-fit: cover;"
+                                <td><img class="img-fluid rounded" style="width: 150px; height: 150px; object-fit: cover;"
                                         src="{{ $cart->product_pictureURL }}" alt=""></td>
                                 <td>₱{{ number_format($cart->product_price) }}</td>
                                 <td>{{ $cart->quantity }}</td>
                                 <td>{{ $cart->total }}</td>
                             </tr>
                         @endforeach
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><div class="d-flex justify-content-end">Grand Total:</div></td>
-                                <td> ₱{{ number_format($cartGrandTotal)}}</td>
-                            </tr>
                     </tbody>
+                    <tfoot>
+                        <tr class="table-secondary">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><div class="d-flex justify-content-end">Grand Total:</div></td>
+                            <td> ₱{{ number_format($cartGrandTotal)}}</td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         @else
