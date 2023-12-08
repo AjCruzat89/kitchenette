@@ -27,6 +27,7 @@ ROUTE::GET('menu', [userController::class, 'menuPage'])->name('menuPage');
 ROUTE::GET('cart', [userController::class, 'cartPage'])->name('cart');
 
 ROUTE::POST('addToCart', [userController::class, 'addToCart'])->name('addToCart');
+ROUTE::POST('checkout', [userController::class, 'checkout'])->name('checkout');
 
 Route::middleware(['loggedIn'])->group(function () {
     Route::VIEW('register', './page/register')->name('registerPage');

@@ -64,6 +64,8 @@
                 <button class="p-2" id="deleteAll">Delete All</button>
             </div>
             <div class="table-responsive mt-3 rounded">
+                <form action="{{ route('checkout') }}" method="POST">
+                    @csrf
                 <table class="table table-hover">
                     <thead class="table-danger">
                         <tr>
@@ -80,7 +82,7 @@
                             <tr class="cart-row">
                                 <td>
                                     <div class="">
-                                        <input type="checkbox" class="cart-checkbox" data-total="{{ $cart->total }}">
+                                        <input type="checkbox" name="checkbox[]" value="{{ $cart->product_id }}" class="cart-checkbox" data-total="{{ $cart->total }}">
                                     </div>
                                 </td>
                                 <td>{{ $cart->product_name }}</td>
@@ -95,7 +97,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="table-secondary" id="checkoutRow" style="display: none;">
-                            <td><button class="btn btn-primary">Proceed To Checkout</button></td>
+                            <td><button type="submit" class="btn btn-primary">Proceed To Checkout</button></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -106,6 +108,7 @@
                         </tr>
                     </tfoot>
                 </table>
+                </form>
             </div>
         @else
             <div class="alert alert-danger text-center p-5 mt-4" data-aos="fade-up">No Products On Cart.</div>

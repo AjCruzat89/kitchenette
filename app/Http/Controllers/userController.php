@@ -18,8 +18,8 @@ class userController extends Controller
     public function homePage(Request $req)
     {
         $products = Product::where('product_stock', '!=', '0')
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->orderBy('created_at', 'desc')
+            ->get();
         foreach ($products as $product) {
             $product->product_pictureURL = asset('storage/' . $product->product_picture);
         }
@@ -102,6 +102,24 @@ class userController extends Controller
             $cart->total = $cart->product_price * $cart->quantity;
         }
         return view('page.cart', ['carts' => $carts]);
+    }
+    //<!--===============================================================================================-->
+    public function checkout(Request $req)
+    {
+
+        $items = Cart::select('cart.product_id', 'products.product_name', 'products.product_picture', 'products.product_price', 'cart.quantity')
+            ->join('products', 'cart.product_id', '=', 'products.id')
+            ->join('users', 'cart.user_id', '=', 'users.id')
+            ->where('cart.user_id', '=', auth()->user()->id)
+            ->whereIn('cart.product_id', $req->input('checkbox'))
+            ->get();
+
+            foreach ($items as $item) {
+                $item->product_pictureURL = asset('storage/' . $item->product_picture);
+                $item->total = $item->product_price * $item->quantity;
+            }
+
+        return view('page.checkout', ['items' => $items]);
     }
     //<!--===============================================================================================-->
 }
