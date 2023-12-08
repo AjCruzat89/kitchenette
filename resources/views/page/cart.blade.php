@@ -97,12 +97,12 @@
                     </tbody>
                     <tfoot>
                         <tr class="table-secondary" id="checkoutRow" style="display: none;">
-                            <td><button type="submit" class="btn btn-primary">Proceed To Checkout</button></td>
+                            <td><button type="submit" class="btn btn-primary" style="white-space: nowrap;">Proceed To Checkout</button></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td>
-                                <div class="d-flex justify-content-end">Grand Total:</div>
+                                <div class="d-flex justify-content-end" style="white-space: nowrap;">Grand Total:</div>
                             </td>
                             <td id="cartGrandTotal"></td>
                         </tr>

@@ -105,8 +105,7 @@ class userController extends Controller
     }
     //<!--===============================================================================================-->
     public function checkout(Request $req)
-    {
-
+    {   
         $items = Cart::select('cart.product_id', 'products.product_name', 'products.product_picture', 'products.product_price', 'cart.quantity')
             ->join('products', 'cart.product_id', '=', 'products.id')
             ->join('users', 'cart.user_id', '=', 'users.id')
