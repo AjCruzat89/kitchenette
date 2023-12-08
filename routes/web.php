@@ -28,6 +28,7 @@ ROUTE::GET('cart', [userController::class, 'cartPage'])->name('cart');
 
 ROUTE::POST('addToCart', [userController::class, 'addToCart'])->name('addToCart');
 ROUTE::POST('checkout', [userController::class, 'checkout'])->name('checkout');
+ROUTE::POST('placeOrder', [userController::class, 'placeOrder'])->name('placeOrder');
 
 Route::middleware(['loggedIn'])->group(function () {
     Route::VIEW('register', './page/register')->name('registerPage');

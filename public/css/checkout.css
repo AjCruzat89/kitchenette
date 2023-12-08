@@ -1,0 +1,76 @@
+body{
+    background-color: black !important;
+    font-family: Roboto, sans-serif !important;
+}
+
+h1, span{
+    color: white !important;
+    font-size: 20px !important;
+}
+
+h1{
+    display: flex !important;
+    align-items: center !important;
+}
+
+h1:hover{
+    filter: brightness(0.6);
+    cursor: pointer;
+}
+
+h2{
+    color: white !important;
+    text-decoration: underline;
+    text-decoration-color: red;
+    text-underline-offset: 8px;
+}
+
+.checkoutBox{
+    background-color: white;
+    max-width: 500px;
+    min-width: 500px;
+}
+
+@media (max-width: 500px) {
+    .checkoutBox{
+        min-width: 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+.checkoutBox .cartBox{
+    background-color: black;
+}
+
+.checkoutBox .cartBox h3:not(.bg-white){
+    color: white;
+}
+
+.checkoutBox .cartBox h3{
+    font-size: 20px;
+}
+
+.checkoutBox .cartBox h3 span{
+    font-size: 20px;
+    color: red !important;
+}
+
+.information{
+    color: black !important;
+    text-decoration: none;
+    border: 5px solid black;
+}
+
+.informationBox h3, .informationBox h3 span, .informationBox span{
+    color: black !important;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.informationBox input[type="number"], .informationBox textarea, .informationBox select, .informationBox input[type="tel"]{
+    border: 1px solid black;
+}
+
