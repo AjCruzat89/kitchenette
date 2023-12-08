@@ -57,7 +57,6 @@
 <!--===============================================================================================-->
 <div class="container" id="bodyContent">
     <div class="d-flex flex-column my-4" data-aos="fade-up">
-
         <h1>MY CART</h1>
 
         @if (count($carts) > 0)
@@ -78,29 +77,32 @@
                     </thead>
                     <tbody>
                         @foreach ($carts as $cart)
-                            <tr>
+                            <tr class="cart-row">
                                 <td>
-                                    <div class="d-flex justify-content-center">
-                                        <input type="checkbox" name="" id="">
+                                    <div class="">
+                                        <input type="checkbox" class="cart-checkbox" data-total="{{ $cart->total }}">
                                     </div>
                                 </td>
                                 <td>{{ $cart->product_name }}</td>
-                                <td><img class="img-fluid rounded" style="width: 150px; height: 150px; object-fit: cover;"
+                                <td><img class="img-fluid rounded"
+                                        style="width: 150px; height: 150px; object-fit: cover;"
                                         src="{{ $cart->product_pictureURL }}" alt=""></td>
-                                <td>₱{{ number_format($cart->product_price) }}</td>
-                                <td>{{ $cart->quantity }}</td>
-                                <td>{{ $cart->total }}</td>
+                                <td class="product-price">₱{{ number_format($cart->product_price) }}</td>
+                                <td class="quantity">{{ $cart->quantity }}</td>
+                                <td class="total">{{ $cart->total }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
-                        <tr class="table-secondary">
+                        <tr class="table-secondary" id="checkoutRow" style="display: none;">
+                            <td><button class="btn btn-primary">Proceed To Checkout</button></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td><div class="d-flex justify-content-end">Grand Total:</div></td>
-                            <td> ₱{{ number_format($cartGrandTotal)}}</td>
+                            <td>
+                                <div class="d-flex justify-content-end">Grand Total:</div>
+                            </td>
+                            <td id="cartGrandTotal"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -109,21 +111,40 @@
             <div class="alert alert-danger text-center p-5 mt-4" data-aos="fade-up">No Products On Cart.</div>
         @endif
     </div>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        if ("{{ session('success') }}") {
-            Swal.fire({
-                icon: 'success',
-                title: '{{ session('success') }}',
-                showCancelButton: false,
-                showConfirmButton: false,
-                timer: 1000
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if ("{{ session('success') }}") {
+                Swal.fire({
+                    icon: 'success',
+                    title: '{{ session('success') }}',
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+            }
+
+            const checkboxes = document.querySelectorAll('.cart-checkbox');
+            const checkoutRow = document.getElementById('checkoutRow');
+            const cartGrandTotalElement = document.getElementById('cartGrandTotal');
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const checkedCheckboxes = document.querySelectorAll('.cart-checkbox:checked');
+                    let cartGrandTotal = 0;
+
+                    checkedCheckboxes.forEach(checkedCheckbox => {
+                        const totalValue = parseFloat(checkedCheckbox.getAttribute(
+                            'data-total'));
+                        cartGrandTotal += totalValue;
+                    });
+
+                    cartGrandTotalElement.textContent = ` ₱${cartGrandTotal.toFixed(2)}`;
+                    checkoutRow.style.display = checkedCheckboxes.length > 0 ? 'table-row' : 'none';
+                });
             });
-        }
-    });
-</script>
-<script>
-    document.title = 'Kitchenette | Cart'
-</script>
-@include('component.footer')
+        });
+    </script>
+    <script>
+        document.title = 'Kitchenette | Cart'
+    </script>
+    @include('component.footer')

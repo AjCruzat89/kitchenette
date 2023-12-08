@@ -101,9 +101,7 @@ class userController extends Controller
             $cart->product_pictureURL = asset('storage/' . $cart->product_picture);
             $cart->total = $cart->product_price * $cart->quantity;
         }
-
-        $cartGrandTotal = $carts->sum('total');
-        return view('page.cart', ['carts' => $carts, 'cartGrandTotal' => $cartGrandTotal]);
+        return view('page.cart', ['carts' => $carts]);
     }
     //<!--===============================================================================================-->
 }
