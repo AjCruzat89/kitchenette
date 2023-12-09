@@ -13,6 +13,7 @@
             <a href="{{ route('menuPage') }}">Menu</a>
             @auth
                 <a href="{{ route('cart') }}">Cart</a>
+                <a href="{{ route('orderStatus') }}">Orders</a>
             @endauth 
             <a href="#">About(NOT YET)</a>
             <a href="#">Contact(NOT YET)</a>

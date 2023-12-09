@@ -25,6 +25,7 @@ Route::POST('loginRequest', [authController::class, 'Login'])->name('loginReques
 Route::GET('logoutRequest', [authController::class, 'Logout'])->name('logoutRequest');
 ROUTE::GET('menu', [userController::class, 'menuPage'])->name('menuPage');
 ROUTE::GET('cart', [userController::class, 'cartPage'])->name('cart');
+ROUTE::GET('order_status', [userController::class, 'orderStatusPage'])->name('orderStatus');
 
 ROUTE::POST('addToCart', [userController::class, 'addToCart'])->name('addToCart');
 ROUTE::POST('checkout', [userController::class, 'checkout'])->name('checkout');

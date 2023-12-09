@@ -167,4 +167,11 @@ class userController extends Controller
         return redirect()->route('cart')->with('success', 'Placed Order Successfully!');
     }
     //<!--===============================================================================================-->
+    public function orderStatusPage(Request $req){
+
+        $orders = Order::where('user_id', auth()->user()->id)->get();
+
+        return view('page.orderstatus', ['orders' => $orders]);
+    }
+    //<!--===============================================================================================-->
 }
