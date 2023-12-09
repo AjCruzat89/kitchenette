@@ -59,6 +59,7 @@
     <div class="d-flex flex-column my-4" data-aos="fade-up">
         <h1>ORDER STATUS</h1>
 
+        @if(count($orders) > 0)
         <div class="table-responsive mt-3 rounded">
             <table class="table">
                 <thead class="table-danger">
@@ -89,6 +90,9 @@
                 </tbody>
             </table>
         </div>
+        @else
+        <div class="alert alert-danger text-center p-5 mb-4" data-aos="fade-up">No Orders Available.</div>
+        @endif
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
