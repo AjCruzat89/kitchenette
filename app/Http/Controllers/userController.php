@@ -71,7 +71,7 @@ class userController extends Controller
             $productExists = Cart::where('user_id', $user->id)->where('product_id', $productId)->first();
 
             if ($productExists) {
-                if($productExists->quantity + $requestedQuantity > $product->product_stock){
+                if($requestedQuantity > $product->product_stock + $productExists->quantity){
                     return response()->json(['error' => 'No More Available Stock!']);
                 }
                 elseif($product->product_stock == 0){
@@ -79,13 +79,17 @@ class userController extends Controller
                 }
                 $productExists->quantity += $requestedQuantity;
                 $productExists->save();
-                return response()->json(['success' => 'Successfully Updated The Quantity Of Product!']);
+                $product->product_stock -= $requestedQuantity;
+                $product->save();
+                return response()->json(['success' => 'Successfully Updated The Cart!']);
             } else {
                 $cart = new Cart();
                 $cart->user_id = $user->id;
                 $cart->product_id = $productId;
                 $cart->quantity = $requestedQuantity;
                 $cart->save();
+                $product->product_stock -= $requestedQuantity;
+                $product->save();
                 return response()->json(['success' => 'Successfully Added To Cart!']);
             }
         } else {

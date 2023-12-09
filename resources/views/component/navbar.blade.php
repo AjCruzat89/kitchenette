@@ -15,8 +15,6 @@
                 <a href="{{ route('cart') }}">Cart</a>
                 <a href="{{ route('orderStatus') }}">Orders</a>
             @endauth 
-            <a href="#">About(NOT YET)</a>
-            <a href="#">Contact(NOT YET)</a>
             @auth
                 <form action="{{route('logoutRequest')}}" method="get">
                     <button class="btn btn-primary" type="submit">Logout</button>

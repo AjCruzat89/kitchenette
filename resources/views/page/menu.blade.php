@@ -67,7 +67,7 @@
                     <form action="{{ route('addToCart') }}" method="POST" class="addToCartForm">
                         @csrf
                         <div class="d-flex flex-column rounded overflow-hidden" id="bodyContentBox">
-                            @if ($product->product_stock == 0 || $product->quantity == $product->product_stock)
+                            @if ($product->product_stock == 0)
                             <img class="soldOut img-fluid" src="{{ asset('./img/sold-out.png') }}">
                             <div class="plainBackground"></div>
                             @endif
@@ -82,7 +82,7 @@
                                         pattern="\d{1,2}" maxlength="2" style="height:30px;">
                                 </div>
                             </div>
-                            @if ($product->product_stock == 0 || $product->quantity == $product->product_stock)
+                            @if ($product->product_stock == 0)
                             <button type="button" class="p-3 addToCartBtn notAvailable">Not Available</button>
                             @else
                             <button type="submit" class="p-3 addToCartBtn">Add To Cart</button>

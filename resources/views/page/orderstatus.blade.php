@@ -59,39 +59,39 @@
     <div class="d-flex flex-column my-4" data-aos="fade-up">
         <h1>ORDER STATUS</h1>
 
-        @if(count($orders) > 0)
-        <div class="table-responsive mt-3 rounded">
-            <table class="table">
-                <thead class="table-danger">
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">phone_number</th>
-                        <th scope="col">email</th>
-                        <th scope="col">address</th>
-                        <th scope="col">orders</th>
-                        <th scope="col">grand_total</th>
-                        <th scope="col">payment_method</th>
-                        <th scope="col">status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($orders as $order)
+        @if (count($orders) > 0)
+            <div class="table-responsive mt-3 rounded">
+                <table class="table">
+                    <thead class="table-danger">
                         <tr>
-                            <td>{{ $order->id }}</td>
-                            <td>{{ $order->phone_number }}</td>
-                            <td>{{ $order->email }}</td>
-                            <td>{{ $order->address }}</td>
-                            <td style="white-space: nowrap">{{ $order->orders }}</td>
-                            <td>{{ $order->grand_total }}</td>
-                            <td>{{ $order->payment_method }}</td>
-                            <td>{{ $order->status }}</td>
+                            <th scope="col">id</th>
+                            <th scope="col">phone_number</th>
+                            <th scope="col">email</th>
+                            <th scope="col">address</th>
+                            <th scope="col">orders</th>
+                            <th scope="col">grand_total</th>
+                            <th scope="col">payment_method</th>
+                            <th scope="col">status</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        @foreach ($orders as $order)
+                            <tr>
+                                <td>{{ $order->id }}</td>
+                                <td>{{ $order->phone_number }}</td>
+                                <td>{{ $order->email }}</td>
+                                <td>{{ $order->address }}</td>
+                                <td style="white-space: nowrap">{{ $order->orders }}</td>
+                                <td>{{ $order->grand_total }}</td>
+                                <td>{{ $order->payment_method }}</td>
+                                <td>{{ $order->status }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         @else
-        <div class="alert alert-danger text-center p-5 mb-4" data-aos="fade-up">No Orders Available.</div>
+            <div class="alert alert-danger text-center p-5 mt-4" data-aos="fade-up">No Orders Placed.</div>
         @endif
     </div>
     <script>
