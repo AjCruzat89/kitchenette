@@ -164,10 +164,6 @@ class userController extends Controller
             Cart::where('product_id', $cart->product_id)->decrement('quantity', $quantity);
         }
 
-        $emptyCarts = Cart::where('quantity', '<=', 0)
-            ->where('user_id', auth()->user()->id)
-            ->delete();
-
         return redirect()->route('cart')->with('success', 'Placed Order Successfully!');
     }
     //<!--===============================================================================================-->
