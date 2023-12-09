@@ -35,8 +35,7 @@ class userController extends Controller
                 $join->on('products.id', '=', 'cart.product_id')
                     ->where('cart.user_id', '=', auth()->user()->id);
             })
-                ->whereRaw('products.product_stock > IFNULL(cart.quantity, 0)')
-                ->select('products.id', 'products.product_name', 'products.product_picture', 'products.product_price')
+                ->select('products.id', 'products.product_name', 'products.product_picture', 'products.product_price', 'products.product_stock', 'cart.quantity')
                 ->orderBy('products.created_at', 'asc')
                 ->get();
 
@@ -47,9 +46,7 @@ class userController extends Controller
             return view('page.menu', ['products' => $products]);
         }
 
-        $products = Product::where('product_stock', '!=', '0')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $products = Product::orderBy('created_at', 'desc')->get();
 
         foreach ($products as $product) {
             $product->product_pictureURL = asset('storage/' . $product->product_picture);
@@ -68,25 +65,31 @@ class userController extends Controller
         if ($user = Auth::user()) {
 
             if ($requestedQuantity > $product->product_stock) {
-                return back()->with('error', 'Remaining Stock Is: ' . $product->product_stock);
+                return response()->json(['error' => 'Remaining Stock Is: ' . $product->product_stock]);
             }
 
             $productExists = Cart::where('user_id', $user->id)->where('product_id', $productId)->first();
 
             if ($productExists) {
+                if($productExists->quantity + $requestedQuantity > $product->product_stock){
+                    return response()->json(['error' => 'No More Available Stock!']);
+                }
+                elseif($product->product_stock == 0){
+                    return response()->json(['error' => 'No More Available Stock!']);
+                }
                 $productExists->quantity += $requestedQuantity;
                 $productExists->save();
-                return back()->with('success', 'Successfully Updated The Quantity Of Product!');
+                return response()->json(['success' => 'Successfully Updated The Quantity Of Product!']);
             } else {
                 $cart = new Cart();
                 $cart->user_id = $user->id;
                 $cart->product_id = $productId;
                 $cart->quantity = $requestedQuantity;
                 $cart->save();
-                return back()->with('success', 'Successfully Added To Cart!');
+                return response()->json(['success' => 'Successfully Added To Cart!']);
             }
         } else {
-            return redirect()->route('loginPage');
+            return response()->json(['error' => 'User not authenticated.']);
         }
     }
     //<!--===============================================================================================-->
@@ -167,7 +170,8 @@ class userController extends Controller
         return redirect()->route('cart')->with('success', 'Placed Order Successfully!');
     }
     //<!--===============================================================================================-->
-    public function orderStatusPage(Request $req){
+    public function orderStatusPage(Request $req)
+    {
 
         $orders = Order::where('user_id', auth()->user()->id)->get();
 

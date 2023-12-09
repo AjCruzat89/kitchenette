@@ -80,7 +80,7 @@
                             <td>{{ $order->phone_number }}</td>
                             <td>{{ $order->email }}</td>
                             <td>{{ $order->address }}</td>
-                            <td>{{ $order->orders }}</td>
+                            <td style="white-space: nowrap">{{ $order->orders }}</td>
                             <td>{{ $order->grand_total }}</td>
                             <td>{{ $order->payment_method }}</td>
                             <td>{{ $order->status }}</td>

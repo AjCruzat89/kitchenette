@@ -64,24 +64,29 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4">
             @foreach ($products as $product)
                 <div class="col" data-aos="fade-up">
-                    <form action="{{ route('addToCart') }}" method="POST">
+                    <form action="{{ route('addToCart') }}" method="POST" class="addToCartForm">
                         @csrf
                         <div class="d-flex flex-column rounded overflow-hidden" id="bodyContentBox">
-                            <img class="img-fluid" src="{{ $product->product_pictureURL }}"
-                                alt="">
+                            @if ($product->product_stock == 0 || $product->quantity == $product->product_stock)
+                            <img class="soldOut img-fluid" src="{{ asset('./img/sold-out.png') }}">
+                            <div class="plainBackground"></div>
+                            @endif
+                            <img class="img-fluid" src="{{ $product->product_pictureURL }}" alt="">
                             <div class="d-flex flex-column p-2">
-                                <input class="d-none" type="number" name="product_id" id=""
-                                    value="{{ $product->id }}" readonly>
+                                <input class="d-none" type="number" name="product_id" value="{{ $product->id }}"
+                                    readonly>
                                 <h1>{{ $product->product_name }}</h1>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h2>Price: ₱{{ number_format($product->product_price) }}</h2>
-                                    <input type="number" name="quantity" id="" value="1" min="0"
-                                        max="99" pattern="\d{1,2}" maxlength="2"
-                                        onInput="this.value = this.value.slice(0, 2)" style="height:30px;">
+                                    <input type="number" name="quantity" value="1" min="0" max="99"
+                                        pattern="\d{1,2}" maxlength="2" style="height:30px;">
                                 </div>
-
                             </div>
-                            <button type="submit" class="p-3">Add To Cart</button>
+                            @if ($product->product_stock == 0 || $product->quantity == $product->product_stock)
+                            <button type="button" class="p-3 addToCartBtn notAvailable">Not Available</button>
+                            @else
+                            <button type="submit" class="p-3 addToCartBtn">Add To Cart</button>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -90,33 +95,46 @@
     @else
         <div class="alert alert-danger text-center p-5 mb-4" data-aos="fade-up">No Products Available.</div>
     @endif
+
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        if ("{{ session('success') }}") {
-            Swal.fire({
-                icon: 'success',
-                title: '{{session('success')}}',
-                showCancelButton: false,
-                showConfirmButton: false,
-                timer: 1000
-            });
-        }
-    });
+    document.querySelectorAll('.addToCartBtn').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            var form = this.closest('form');
+            var formData = new FormData(form);
 
-    @if (session('error'))
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'error',
-                title: '{{ session('error')}}',
-                showCancelButton: false,
-                showConfirmButton: false,
-                timer: 2000,
-            });
+            fetch(form.action, {
+                    method: form.method,
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: data.success,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    } else if (data.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: data.error,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
         });
-    @endif
+    });
 </script>
 <script>
-    document.title = 'Kitchenette | Menu'
+    document.title = 'Kitchenette | Menu';
 </script>
 @include('component.footer')

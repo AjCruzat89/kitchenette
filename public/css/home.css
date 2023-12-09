@@ -290,6 +290,27 @@ body {
 #bodyContentBox{
     background-color: #B42730;
     color: white !important;
+    position: relative;
+
+}
+
+
+#bodyContentBox .plainBackground{
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: transparent;
+}
+
+#bodyContentBox .plainBackground:hover{
+    cursor:not-allowed;
+}
+
+.soldOut{
+    display: flex;
+    justify-content: center;
+    position: absolute;
 }
 
 #bodyContentBox h1, #bodyContentBox h2{
@@ -306,9 +327,11 @@ body {
     color: black;
 }
 
-#bodyContentBox button:hover{
+
+#bodyContentBox button:not(.notAvailable):hover {
     filter: brightness(0.6);
 }
+
 
 #bodyContentBox input[type="number"]{
     border-radius: 10px;
