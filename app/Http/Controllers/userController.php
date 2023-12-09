@@ -37,7 +37,7 @@ class userController extends Controller
             })
                 ->whereRaw('products.product_stock > IFNULL(cart.quantity, 0)')
                 ->select('products.id', 'products.product_name', 'products.product_picture', 'products.product_price')
-                ->orderBy('products.created_at', 'desc')
+                ->orderBy('products.created_at', 'asc')
                 ->get();
 
 
@@ -137,7 +137,6 @@ class userController extends Controller
         $order->grand_total = $req->input('grandTotal');
         $order->payment_method = $req->input('payment_method');
         $order->save();
-
 
         $updateProducts = Product::whereIn('id', $req->product_id)
             ->orderBy('product_name', 'asc')

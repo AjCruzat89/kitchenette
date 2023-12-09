@@ -60,14 +60,14 @@
                                 call
                             </span>
                             <input class="rounded p-1 w-100" type="tel" name="phone_number" id=""
-                                placeholder="Enter Phone Number..." required maxlength="11">
+                                placeholder="Enter Phone Number..." required maxlength="11" oninput="this.value = this.value.replace(/\D/g, '')">
                         </div>
                         <div class="d-flex flex-row align-items-center gap-1 mt-2">
                             <span class="material-symbols-outlined">
                                 location_on
                             </span>
                             <textarea class="w-100 p-1 rounded" name="address" id="" cols="30" rows="2"
-                                placeholder="Enter Address..." required maxlength="50"></textarea>
+                                placeholder="Enter Address..." required maxlength="100"></textarea>
                         </div>
 
                         <div class="d-flex flex-row align-items-center gap-1 mt-2">

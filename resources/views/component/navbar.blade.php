@@ -12,7 +12,7 @@
             <a href="{{ route('home') }}">Home</a>
             <a href="{{ route('menuPage') }}">Menu</a>
             @auth
-                <a href="{{ route('cart') }}">Cart(NOT FINISHED)</a>
+                <a href="{{ route('cart') }}">Cart</a>
             @endauth 
             <a href="#">About(NOT YET)</a>
             <a href="#">Contact(NOT YET)</a>

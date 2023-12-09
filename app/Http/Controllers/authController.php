@@ -71,7 +71,7 @@ class authController extends Controller
 
         $user = User::where('email', $req->input('email'))->first();
         if($user->verified == 0){
-            return redirect()->route('loginPage')->error('error', 'User Not Verified!');
+            return redirect()->route('loginPage')->with('error', 'User Not Verified!');
         }
 
         $credentials = $req->only('email', 'password');
@@ -92,7 +92,7 @@ class authController extends Controller
                     return redirect()->route('home')->with('success', 'Login Successful!');
             }
         }
-        return redirect(route('loginPage'))->with('error', 'Incorrect Email/Password!.');
+        return redirect()->route('loginPage')->with('error', 'Incorrect Email/Password!.');
     }
     //<!--===============================================================================================-->
     public function ForgotPasswordRequest(Request $req)
