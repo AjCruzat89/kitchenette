@@ -18,9 +18,7 @@ class userController extends Controller
     //<!--===============================================================================================-->
     public function homePage(Request $req)
     {
-        $products = Product::where('product_stock', '!=', '0')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $products = Product::orderBy('created_at', 'desc')->get();
         foreach ($products as $product) {
             $product->product_pictureURL = asset('storage/' . $product->product_picture);
         }
@@ -71,10 +69,9 @@ class userController extends Controller
             $productExists = Cart::where('user_id', $user->id)->where('product_id', $productId)->first();
 
             if ($productExists) {
-                if($requestedQuantity > $product->product_stock + $productExists->quantity){
+                if ($requestedQuantity > $product->product_stock + $productExists->quantity) {
                     return response()->json(['error' => 'No More Available Stock!']);
-                }
-                elseif($product->product_stock == 0){
+                } elseif ($product->product_stock == 0) {
                     return response()->json(['error' => 'No More Available Stock!']);
                 }
                 $productExists->quantity += $requestedQuantity;
