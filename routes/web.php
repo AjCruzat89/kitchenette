@@ -30,6 +30,8 @@ ROUTE::GET('order_status', [userController::class, 'orderStatusPage'])->name('or
 ROUTE::POST('addToCart', [userController::class, 'addToCart'])->name('addToCart');
 ROUTE::POST('checkout', [userController::class, 'checkout'])->name('checkout');
 ROUTE::POST('placeOrder', [userController::class, 'placeOrder'])->name('placeOrder');
+ROUTE::POST('deleteProductsArray', [userController::class, 'deleteProductsArray'])->name('deleteProductsArray');
+ROUTE::POST('deleteAllCart', [userController::class, 'deleteAllCart'])->name('deleteAllCart');
 
 Route::middleware(['loggedIn'])->group(function () {
     Route::VIEW('register', './page/register')->name('registerPage');

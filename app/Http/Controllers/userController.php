@@ -34,7 +34,7 @@ class userController extends Controller
                     ->where('cart.user_id', '=', auth()->user()->id);
             })
                 ->select('products.id', 'products.product_name', 'products.product_picture', 'products.product_price', 'products.product_stock', 'cart.quantity')
-                ->orderBy('products.created_at', 'asc')
+                ->orderBy('products.product_name', 'asc')
                 ->get();
 
 
@@ -110,6 +110,64 @@ class userController extends Controller
         return view('page.cart', ['carts' => $carts]);
     }
     //<!--===============================================================================================-->
+    public function deleteProductsArray(Request $req)
+    {
+        $productsArray = $req->input('productsArray');
+        if (!$productsArray) {
+            return back()->with('error', 'No Products Selected!');
+        }
+
+        $productIds = explode(", ", $productsArray);
+
+        $cart = Cart::select('cart.product_id', 'products.product_name', 'products.product_picture', 'products.product_price', 'cart.quantity')
+            ->join('products', 'cart.product_id', '=', 'products.id')
+            ->join('users', 'cart.user_id', '=', 'users.id')
+            ->where('cart.user_id', '=', auth()->user()->id)
+            ->whereIn('cart.product_id', $productIds)
+            ->orderBy('products.product_name', 'asc')
+            ->get();
+
+        $productIdsInCart = $cart->pluck('product_id')->toArray();
+        $quantitiesInCart = $cart->pluck('quantity')->toArray();
+
+        $products = Product::whereIn('id', $productIdsInCart)
+            ->orderBy('product_name', 'asc')
+            ->get();
+
+        foreach ($products as $key => $product) {
+            $product->increment('product_stock', $quantitiesInCart[$key]);
+        }
+        Cart::whereIn('product_id', $productIds)->delete();
+
+        return redirect()->route('cart')->with('success', 'Deleted Products Successfully!');
+    }
+    //<!--===============================================================================================-->
+    public function deleteAllCart(Request $req)
+    {
+        $cart = Cart::select('cart.product_id', 'products.product_name', 'products.product_picture', 'products.product_price', 'cart.quantity')
+            ->join('products', 'cart.product_id', '=', 'products.id')
+            ->join('users', 'cart.user_id', '=', 'users.id')
+            ->where('cart.user_id', '=', auth()->user()->id)
+            ->orderBy('products.product_name', 'asc')
+            ->get();
+
+        $productIdsInCart = $cart->pluck('product_id')->toArray();
+        $quantitiesInCart = $cart->pluck('quantity')->toArray();
+
+
+        $products = Product::whereIn('id', $productIdsInCart)
+            ->orderBy('product_name', 'asc')
+            ->get();
+
+        foreach ($products as $key => $product) {
+            $product->increment('product_stock', $quantitiesInCart[$key]);
+        }
+
+        Cart::where('user_id', auth()->user()->id)->delete();
+
+        return redirect()->route('cart')->with('success', 'Deleted All From Cart!');
+    }
+    //<!--===============================================================================================-->
     public function checkout(Request $req)
     {
         $items = Cart::select('cart.product_id', 'products.product_name', 'products.product_picture', 'products.product_price', 'cart.quantity')
@@ -142,16 +200,6 @@ class userController extends Controller
         $order->payment_method = $req->input('payment_method');
         $order->save();
 
-        $updateProducts = Product::whereIn('id', $req->product_id)
-            ->orderBy('product_name', 'asc')
-            ->get();
-
-        foreach ($updateProducts as $key => $product) {
-            $quantity = $req->input('quantity')[$key];
-            $product->product_stock -= $quantity;
-            $product->save();
-        }
-
         $updateCarts = Cart::select('cart.product_id', 'products.product_name', 'products.product_picture', 'products.product_price', 'cart.quantity')
             ->join('products', 'cart.product_id', '=', 'products.id')
             ->join('users', 'cart.user_id', '=', 'users.id')
@@ -173,8 +221,9 @@ class userController extends Controller
     //<!--===============================================================================================-->
     public function orderStatusPage(Request $req)
     {
-
-        $orders = Order::where('user_id', auth()->user()->id)->get();
+        $orders = Order::where('user_id', auth()->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('page.orderstatus', ['orders' => $orders]);
     }

@@ -61,59 +61,118 @@
 
         @if (count($carts) > 0)
             <div class="d-flex flex-row mt-4">
-                <button class="p-2" id="deleteAll">Delete All</button>
+                <button type="submit" class="p-2" id="deleteAll" data-bs-toggle="modal"
+                    data-bs-target="#deleteAllProducts">Delete All</button>
             </div>
             <div class="table-responsive mt-3 rounded">
                 <form action="{{ route('checkout') }}" method="POST">
                     @csrf
-                <table class="table table-hover">
-                    <thead class="table-danger">
-                        <tr>
-                            <th>Select</th>
-                            <th scope="col">product_name</th>
-                            <th scope="col">product_picture</th>
-                            <th scope="col">product_price</th>
-                            <th scope="col">quantity</th>
-                            <th scope="col">total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($carts as $cart)
-                            <tr class="cart-row">
+                    <table class="table table-hover">
+                        <thead class="table-danger">
+                            <tr>
+                                <th>Select</th>
+                                <th scope="col">product_name</th>
+                                <th scope="col">product_picture</th>
+                                <th scope="col">product_price</th>
+                                <th scope="col">quantity</th>
+                                <th scope="col">total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($carts as $cart)
+                                <tr class="cart-row">
+                                    <td>
+                                        <div class="">
+                                            <input type="checkbox" name="checkbox[]" value="{{ $cart->product_id }}"
+                                                class="cart-checkbox" data-total="{{ $cart->total }}">
+                                        </div>
+                                    </td>
+                                    <td>{{ $cart->product_name }}</td>
+                                    <td><img class="img-fluid rounded"
+                                            style="width: 150px; height: 150px; object-fit: cover;"
+                                            src="{{ $cart->product_pictureURL }}" alt=""></td>
+                                    <td class="product-price">₱{{ number_format($cart->product_price) }}</td>
+                                    <td class="quantity">{{ $cart->quantity }}</td>
+                                    <td class="total">{{ $cart->total }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-secondary" id="checkoutRow" style="display: none;">
                                 <td>
-                                    <div class="">
-                                        <input type="checkbox" name="checkbox[]" value="{{ $cart->product_id }}" class="cart-checkbox" data-total="{{ $cart->total }}">
+                                    <div class="d-flex flex-column gap-2">
+                                        <button type="submit" class="btn btn-primary"
+                                            style="white-space: nowrap;">Proceed
+                                            To Checkout</button>
+                                        <button type="button" class="btn btn-danger" id="deleteButton"
+                                            data-bs-toggle="modal" data-bs-target="#deleteProducts">Delete</button>
                                     </div>
                                 </td>
-                                <td>{{ $cart->product_name }}</td>
-                                <td><img class="img-fluid rounded"
-                                        style="width: 150px; height: 150px; object-fit: cover;"
-                                        src="{{ $cart->product_pictureURL }}" alt=""></td>
-                                <td class="product-price">₱{{ number_format($cart->product_price) }}</td>
-                                <td class="quantity">{{ $cart->quantity }}</td>
-                                <td class="total">{{ $cart->total }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="d-flex justify-content-end" style="white-space: nowrap;">Grand Total:
+                                    </div>
+                                </td>
+                                <td id="cartGrandTotal"></td>
                             </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr class="table-secondary" id="checkoutRow" style="display: none;">
-                            <td><button type="submit" class="btn btn-primary" style="white-space: nowrap;">Proceed To Checkout</button></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <div class="d-flex justify-content-end" style="white-space: nowrap;">Grand Total:</div>
-                            </td>
-                            <td id="cartGrandTotal"></td>
-                        </tr>
-                    </tfoot>
-                </table>
+                        </tfoot>
+                    </table>
                 </form>
             </div>
         @else
             <div class="alert alert-danger text-center p-5 mt-4" data-aos="fade-up">No Products On Cart.</div>
         @endif
     </div>
+    <!--===============================================================================================-->
+    <form action="{{ route('deleteProductsArray') }}" method="POST">
+        @csrf
+        <div class="modal fade" id="deleteProducts" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Products From Cart</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" name="productsArray" id="productsArray" readonly>
+                        <h3>Are you sure?</h3>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--===============================================================================================-->
+    <form action="{{ route('deleteAllCart') }}" method="POST">
+        @csrf
+        <div class="modal fade" id="deleteAllProducts" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Products From Cart</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Are you sure?</h3>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--===============================================================================================-->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             if ("{{ session('success') }}") {
@@ -141,13 +200,35 @@
                         cartGrandTotal += totalValue;
                     });
 
-                    cartGrandTotalElement.textContent = ` ₱${cartGrandTotal.toFixed(2)}`;
+
+                    const formatter = new Intl.NumberFormat('en-PH', {
+                        style: 'currency',
+                        currency: 'PHP'
+                    });
+                    cartGrandTotalElement.textContent = ` ${formatter.format(cartGrandTotal)}`;
+
                     checkoutRow.style.display = checkedCheckboxes.length > 0 ? 'table-row' : 'none';
                 });
             });
         });
     </script>
+    <!--===============================================================================================-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButton = document.getElementById('deleteButton');
+
+            deleteButton.addEventListener('click', function() {
+                const checkedCheckboxes = document.querySelectorAll('.cart-checkbox:checked');
+                const productIdsArray = Array.from(checkedCheckboxes).map(checkbox => checkbox.value);
+
+                document.getElementById('productsArray').value = productIdsArray.join(', ');
+                console.log(productIdsArray);
+            });
+        });
+    </script>
+    <!--===============================================================================================-->
     <script>
         document.title = 'Kitchenette | Cart'
     </script>
+    <!--===============================================================================================-->
     @include('component.footer')

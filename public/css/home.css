@@ -211,7 +211,7 @@ body {
     padding: 10px 10px;
 }
 
-#bodyContent h1{
+#bodyContent h1:not(.modal-title){
     color: white;
     text-decoration: underline;
     text-decoration-color: #B42730;
