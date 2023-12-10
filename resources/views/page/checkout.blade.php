@@ -32,7 +32,7 @@
         <!--===============================================================================================-->
         <div class="d-flex justify-content-center mt-4 w-100">
             <!--===============================================================================================-->
-            <form action="{{ route('placeOrder') }}" method="POST">
+            <form class="d-flex justify-content-center w-100" action="{{ route('placeOrder') }}" method="POST">
                 @csrf
                 <!--===============================================================================================-->
                 <div class="checkoutBox p-2 p-md-3 rounded">

@@ -25,19 +25,19 @@ h2{
     text-underline-offset: 8px;
 }
 
-.checkoutBox{
+.checkoutBox {
     background-color: white;
-    max-width: 500px;
+    width: 500px;
     min-width: 500px;
 }
 
 @media (max-width: 500px) {
-    .checkoutBox{
-        min-width: 100%;
-        width: 100%;
-        max-width: 100%;
+    .checkoutBox {
+        width: 100% !important;
+        min-width: 100% !important;
     }
 }
+
 
 .checkoutBox .cartBox{
     background-color: black;

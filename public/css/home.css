@@ -169,13 +169,9 @@ body {
         animation-fill-mode: forwards;
     }
 
-    #menuLists > :last-child {
-        margin-top: auto !important;
-    }
-
     @keyframes left {
         from{
-            transform: translateX(-500px);
+            transform: translateX(-1000px);
         }
         
         to{
