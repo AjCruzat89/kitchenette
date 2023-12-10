@@ -138,7 +138,7 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" name="productsArray" id="productsArray" readonly>
+                        <input class="d-none" type="text" name="productsArray" id="productsArray" readonly>
                         <h3>Are you sure?</h3>
                     </div>
                     <div class="modal-footer justify-content-center">

@@ -59,9 +59,10 @@
     <div class="d-flex flex-column my-4" data-aos="fade-up">
         <h1>ORDER STATUS</h1>
 
-        <div class="d-flex flex-column w-100 mt-4 rounded overflow-hidden" id="orderStatus">
-            @if (count($orders) > 0)
-                @foreach ($orders as $order)
+        @if (count($orders) > 0)
+            @foreach ($orders as $order)
+                <div class="d-flex flex-column w-100 mt-4 rounded overflow-hidden" id="orderStatus">
+
                     <div class="d-flex flex-column w-100" id="orderStatusBox">
                         <div class="d-flex flex-row w-100 pt-3 pb-2 ps-2 pe-2" id="orderStatusHeader">
                             <h1><span class="material-symbols-outlined">
@@ -83,27 +84,33 @@
                                 $orderItems = explode(',', $order->orders);
                             @endphp
                             <p class="orders"><span class="material-symbols-outlined">
-                                list_alt
-                                </span>ORDERS: <br>@foreach ($orderItems as $item)
-                                    {{ $item }}<br>
+                                    list_alt
+                                </span>ORDERS: <br>
+                                @foreach ($orderItems as $item)
+                                    {{ $item }}
+                                    <br>
                                 @endforeach
                             </p>
                             <p><span class="material-symbols-outlined">
-                                shopping_cart
+                                    shopping_cart
                                 </span>GRAND TOTAL: ₱{{ $order->grand_total }}</p>
                             <p><span class="material-symbols-outlined">
-                                payments
+                                    payments
                                 </span>PAYMENT METHOD: {{ $order->payment_method }}</p>
-                            @if($order->status == 'pending')
-                            <p><span class="material-symbols-outlined">
-                                check_circle
-                                </span>STATUS: <i style="color: red; font-weight: bold; text-decoration: none;">PENDING</i></p>
+                            @if ($order->status == 'pending')
+                                <p><span class="material-symbols-outlined">
+                                        check_circle
+                                    </span>STATUS: <i
+                                        style="color: red; font-weight: bold; text-decoration: none;">PENDING</i></p>
                             @endif
                         </div>
                     </div>
-                @endforeach
-            @endif
-        </div>
+
+                </div>
+            @endforeach
+        @else
+        <div class="alert alert-danger text-center p-5 mt-4" data-aos="fade-up">No Orders Placed.</div>
+        @endif
     </div>
     <!--===============================================================================================-->
     <script>

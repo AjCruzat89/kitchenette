@@ -78,8 +78,8 @@
                                 <h1>{{ $product->product_name }}</h1>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h2>Price: ₱{{ number_format($product->product_price) }}</h2>
-                                    <input type="number" name="quantity" value="1" min="0" max="99"
-                                        pattern="\d{1,2}" maxlength="2" style="height:30px;">
+                                    <input type="number" name="quantity" value="0" min="0" max="99" inputmode="numeric"
+                                        pattern="\d{1,2}" style="height:30px;">
                                 </div>
                             </div>
                             @if ($product->product_stock == 0)
