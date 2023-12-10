@@ -1,5 +1,6 @@
 body {
     background-color: black !important;
+    font-family: Roboto, sans-serif !important;
 }
 
 #hero {
@@ -343,4 +344,41 @@ body {
 input[type="checkbox"]{
     width: 18px;
     height: 18px;
+}
+
+#orderStatus{
+    background-color: white;
+}
+
+#orderStatus #orderStatusHeader{
+    background-color: #B42730;
+}
+
+#orderStatusHeader h1{
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 28px;
+    text-decoration: none !important;
+}
+
+#orderStatusBody p:not(.orders):not(.pending){
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: black !important;
+    text-decoration: none !important;
+    gap: 5px ;
+}
+
+.orders{
+    display: flex;
+    font-size: 15px;
+    gap: 5px;
+}
+
+#orderStatusHeader:hover{
+    filter: brightness(0.6);
+    cursor: pointer;
 }

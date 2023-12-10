@@ -59,41 +59,53 @@
     <div class="d-flex flex-column my-4" data-aos="fade-up">
         <h1>ORDER STATUS</h1>
 
-        @if (count($orders) > 0)
-            <div class="table-responsive mt-3 rounded">
-                <table class="table">
-                    <thead class="table-danger">
-                        <tr>
-                            <th scope="col">id</th>
-                            <th scope="col">phone_number</th>
-                            <th scope="col">email</th>
-                            <th scope="col">address</th>
-                            <th scope="col">orders</th>
-                            <th scope="col">grand_total</th>
-                            <th scope="col">payment_method</th>
-                            <th scope="col">status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($orders as $order)
-                            <tr>
-                                <td>{{ $order->id }}</td>
-                                <td>{{ $order->phone_number }}</td>
-                                <td>{{ $order->email }}</td>
-                                <td>{{ $order->address }}</td>
-                                <td style="white-space: nowrap">{{ $order->orders }}</td>
-                                <td>{{ $order->grand_total }}</td>
-                                <td>{{ $order->payment_method }}</td>
-                                <td>{{ $order->status }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @else
-            <div class="alert alert-danger text-center p-5 mt-4" data-aos="fade-up">No Orders Placed.</div>
-        @endif
+        <div class="d-flex flex-column w-100 mt-4 rounded overflow-hidden" id="orderStatus">
+            @if (count($orders) > 0)
+                @foreach ($orders as $order)
+                    <div class="d-flex flex-column w-100" id="orderStatusBox">
+                        <div class="d-flex flex-row w-100 pt-3 pb-2 ps-2 pe-2" id="orderStatusHeader">
+                            <h1><span class="material-symbols-outlined">
+                                    expand_more
+                                </span>ORDER ID: {{ $order->id }}</h1>
+                        </div>
+
+                        <div class="d-none flex-column py-4 px-2" id="orderStatusBody">
+                            <p><span class="material-symbols-outlined">
+                                    call
+                                </span>PHONE NUMBER: {{ $order->phone_number }}</p>
+                            <p><span class="material-symbols-outlined">
+                                    mail
+                                </span>EMAIL: {{ $order->email }}</p>
+                            <p><span class="material-symbols-outlined">
+                                    location_on
+                                </span>ADDRESS: {{ $order->email }}</p>
+                            @php
+                                $orderItems = explode(',', $order->orders);
+                            @endphp
+                            <p class="orders"><span class="material-symbols-outlined">
+                                list_alt
+                                </span>ORDERS: @foreach ($orderItems as $item)
+                                    {{ $item }}<br>
+                                @endforeach
+                            </p>
+                            <p><span class="material-symbols-outlined">
+                                shopping_cart
+                                </span>GRAND TOTAL: ₱{{ $order->grand_total }}</p>
+                            <p><span class="material-symbols-outlined">
+                                payments
+                                </span>PAYMENT METHOD: {{ $order->payment_method }}</p>
+                            @if($order->status == 'pending')
+                            <p><span class="material-symbols-outlined">
+                                check_circle
+                                </span>STATUS: <i style="color: red; font-weight: bold; text-decoration: none;">PENDING</i></p>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
     </div>
+    <!--===============================================================================================-->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             if ("{{ session('success') }}") {
@@ -105,9 +117,23 @@
                     timer: 1000
                 });
             }
+
+            const orderStatusBoxes = document.querySelectorAll('#orderStatusBox');
+
+            orderStatusBoxes.forEach(orderStatusBox => {
+                const orderStatusHeader = orderStatusBox.querySelector('#orderStatusHeader');
+
+                orderStatusHeader.addEventListener('click', function() {
+                    const orderStatusBody = orderStatusBox.querySelector('#orderStatusBody');
+                    orderStatusBody.classList.toggle('d-flex');
+                    orderStatusBody.classList.toggle('d-none');
+                });
+            });
         });
     </script>
+    <!--===============================================================================================-->
     <script>
         document.title = 'Kitchenette | Order Status'
     </script>
+    <!--===============================================================================================-->
     @include('component.footer')
