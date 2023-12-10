@@ -84,7 +84,7 @@
                             @endphp
                             <p class="orders"><span class="material-symbols-outlined">
                                 list_alt
-                                </span>ORDERS: @foreach ($orderItems as $item)
+                                </span>ORDERS: <br>@foreach ($orderItems as $item)
                                     {{ $item }}<br>
                                 @endforeach
                             </p>
