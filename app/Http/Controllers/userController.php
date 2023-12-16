@@ -58,14 +58,14 @@ class userController extends Controller
         $productId = $req->input('product_id');
         $requestedQuantity = $req->input('quantity');
 
-        // Check if the requested quantity is 0
-        if ($requestedQuantity == 0) {
-            return response()->json(['error' => 'Quantity must be greater than 0.']);
-        }
 
         $product = Product::where('id', $productId)->first();
 
         if ($user = Auth::user()) {
+
+            if ($requestedQuantity <= 0) {
+                return response()->json(['error' => 'Quantity must be greater than 0.']);
+            }
 
             if ($requestedQuantity > $product->product_stock) {
                 return response()->json(['error' => 'Remaining Stock Is: ' . $product->product_stock]);
