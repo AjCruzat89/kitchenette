@@ -59,10 +59,9 @@
     <div class="d-flex flex-column my-4" data-aos="fade-up">
         <h1>ORDER STATUS</h1>
 
-        @if (count($orders) > 0)
-            @foreach ($orders as $order)
-                <div class="d-flex flex-column w-100 mt-4 rounded overflow-hidden" id="orderStatus">
-
+        <div class="d-flex flex-column mt-4 w-100 rounded overflow-hidden" id="orderStatus">
+            @if (count($orders) > 0)
+                @foreach ($orders as $order)
                     <div class="d-flex flex-column w-100" id="orderStatusBox">
                         <div class="d-flex flex-row w-100 pt-3 pb-2 ps-2 pe-2" id="orderStatusHeader">
                             <h1><span class="material-symbols-outlined">
@@ -105,10 +104,9 @@
                             @endif
                         </div>
                     </div>
-
-                </div>
-            @endforeach
-        @else
+                @endforeach
+        </div>
+    @else
         <div class="alert alert-danger text-center p-5 mt-4" data-aos="fade-up">No Orders Placed.</div>
         @endif
     </div>
